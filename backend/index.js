@@ -3,25 +3,36 @@ var express=require('express'),
 bodyParser = require('body-parser'),
 // ejs=require('ejs'),
 mongoose=require('mongoose'),
-Candidate=require('./models/Candidate.js'),
-Client=require('./models/Client.js'),
-Jobs=require('./models/Jobs.js'),
+// Candidate=require('./models/Candidate.js'),
+
+// Jobs=require('./models/Jobs.js'),
 // LoginUser=require('./LoginData.js'),
 methodOverride=require('method-override'),
 session=require('express-session');
+var cors = require('cors'),
+session=require('express-session'),
+cookieParser=require('cookie-parser');
+var app=express();
+app.use(cookieParser('secret'));
+app.use(session({
+    secret:'Login Data',
+    resave:true,
+    saveUninitialized:true
+}));
 // cookie=require('cookie-parser'),
 
 // passport=require('passport'),
 // localStrategy=require('passport-local').Strategy,
 // bcrypt=require('bcryptjs'),
 // flash=require('connect-flash');
-var app=express();
+
 
 app.set('view engine','ejs');
 app.set('views',path.join(__dirname,'views'));
-app.use(bodyParser.urlencoded({extended:true}));
+// app.use(bodyParser.urlencoded({extended:false}));
+app.use(bodyParser.json());
 app.use(methodOverride('_method'));
-
+app.use(cors());
 // app.use(cookie('secret'));
 // app.use(session({
 //     secret:'Phone-Book',
@@ -56,10 +67,11 @@ mongoose.connect(url,{useUnifiedTopology: true,useNewUrlParser:true}).then(()=>{
 //         return res.redirect('/login');
 //     }
 // }
-
-app.get('/',function(req,res){
-    res.send("hello World");
-})
+var client=require('./routes/client');
+// var candidate=require('./routes/candidate');
+app.use('/client',client);
+// app.use('/candidate',candidate);
+// app.post
 app.listen(process.env.PORT || 2040, process.env.ID,function(req,res){
     console.log("Server Started....");
 })
