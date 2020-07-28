@@ -5,6 +5,9 @@ var JobsSchema=mongoose.Schema({
         type:Number,
         required:true
     },
+    CandidateId:{
+        type:Number
+    },
     Id:{
         required:true,
         type:Number
@@ -13,6 +16,10 @@ var JobsSchema=mongoose.Schema({
         required:true,
         type:Date
 
+    },
+    Company:{
+        required:true,
+        type:String
     },
     Designation:{
         required:true,

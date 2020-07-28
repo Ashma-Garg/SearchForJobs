@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
 import {Label, Col, Row,Button} from 'reactstrap';
-// import 'react-redux';
-// import 'redux';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
 import {LocalForm,Control} from 'react-redux-form';
@@ -13,7 +11,6 @@ class ClientLogin extends Component{
             err:''
         };
         this.handleSubmit=this.handleSubmit.bind(this);
-        // window.location('/clientreister');
     }
     handleSubmit(values){
         // console.log("Current values are: "+ JSON.stringify(values));
@@ -30,46 +27,31 @@ class ClientLogin extends Component{
             responseMethod:"POST"
         })
         .then((res)=>{
-            if(res.data.length>0){
+            if(res.data.status===400){
                 this.setState({
-                    err:res.data
+                    err:res.data.data
                 });
             }
-        });
-        setTimeout(()=>{axios.get(`http://localhost:2040/client`)
-        .then(response =>{
-            if(response.data.length>0){
-                // alert(response.data);
-                this.setState({
-                    client:response.data.map((client)=>client.Name)
-                });
-                
+            else{
+                window.location.href='/client';
             }
         });
-    },2000
-    );
+        
         
 
     }
     componentDidMount(){
-        // const client=[];
-    //     async function getClient(){
-    //         try{
-    //             const res=await axios.get('http://localhost:2040/client/');
-    //             console.log(res);
-    //         }
-    //         catch(error){
-    //             console.log(error);
-    //         }
-    //     }
-    //     getClient();
-    // }
         axios.get(`http://localhost:2040/client`)
         .then(response =>{
             if(response.data.length>0){
-                // alert(response.data);
                 this.setState({
-                    client:response.data.map((client)=>client.Name)
+                    client:response.data.map((client)=>{
+                        return(
+                        <div>
+                            {client.Name}
+                        </div>
+                        );
+                    })
                 });
                 
             }

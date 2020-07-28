@@ -57,6 +57,7 @@ class Login extends Component{
                     </Row>
                     
                 </LocalForm>
+                <Link to="/jobs/newJob">Add New</Link>
             </div>
         );
     }

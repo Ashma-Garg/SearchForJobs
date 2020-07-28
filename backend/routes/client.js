@@ -1,6 +1,20 @@
 var router=require('express').Router();
 var Client=require('../models/Client.js'),
-bcrypt=require('bcryptjs');
+bcrypt=require('bcryptjs'),
+session=require('express-session'),
+passport=require('passport'),
+LocalStrategy=require('passport-local').Strategy,
+cookieParser=require('cookie-parser');
+
+router.use(cookieParser('secret'));
+router.use(session({
+    secret: 'secret',
+    maxAge: 3600000,  // user can be logged in for 2 week (cookies will be preserved for 2 week)
+    resave: true,
+    saveUninitialized: true,
+}));
+router.use(passport.initialize());
+router.use(passport.session());
 
 router.get('/',function(req,res){
     Client.find({},function(err,data){
@@ -11,20 +25,19 @@ router.get('/',function(req,res){
     });
 });
 router.post('/add',function(req,res){
-    // console.log("Port 2040 pr ye hai... " + req.body);
-    // res.send(req.body);
     var password=req.body.password;
     var err;
     if(req.body.cpassword!=req.body.password){
-        err="Password Doesn't match!"
-        res.json(err);
+        err="Password Doesn't match!";
+
+        res.json({data:err,status:400});
     }
     if(typeof err=='undefined'){
         Client.findOne({Email:req.body.email},function(error,data){
             if(error) console.log(error);
             if(data){
                 err="Email is already registed";
-                res.json(err);
+                res.json({data:err,status:400});
             }
             else{
                 bcrypt.genSalt(10, (error,salt)=>{
@@ -35,13 +48,13 @@ router.post('/add',function(req,res){
                         Client({
                             Name:req.body.name,
                             Email:req.body.email,
-                            Password:req.body.password,
+                            Password:password,
                             Company:req.body.company,
                             Id:req.body.id
                         }).save((error,data)=>{
                             if(error) console.log(error);
                             else{
-                                err="Successfully Registered!"
+                                err="Successfully Registered!";
                                 res.json(err);
                             } 
                         })
@@ -53,5 +66,33 @@ router.post('/add',function(req,res){
     }
 
 });
+
+router.post('/login',function(req,res){
+    var err;
+    Client.findOne({Email:req.body.email},function(error,data){
+        if(error) console.log(error);
+        if(!data){
+            err="Email is not registered";
+            res.json({err:err,status:400});
+        }
+        if(typeof err=='undefined'){
+            bcrypt.compare(req.body.password,data.Password,(error,match)=>{
+                if(err){
+                    console.log(error);
+                }
+                if(!match){
+                    err="Password Doesn't Match";
+                    res.json({err:err,status:400});
+                }
+                if(match){
+                    err="Successfully Login";
+                    // console.log(data._id);
+                    res.json({err:err,status:200,id:data.Id});
+                }
+            })
+        }
+    })
+});
+
 
 module.exports=router;

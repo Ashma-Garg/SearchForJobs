@@ -53,7 +53,7 @@ class ClientLogin extends Component{
                         <Button type="submit">Submit</Button>
                         </Col>
                         <Col>
-                        <Link to="/client" >Already Registered?</Link>
+                        <Link to="/" >Already Registered?</Link>
                         </Col>
                     </Row>
                     <br/>
