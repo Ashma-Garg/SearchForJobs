@@ -27,15 +27,18 @@ class NewJob extends Component{
     }
     handleSubmit(values){
         const jobs={
-            clientid:values.clientId,
-            jobid:values.id,
-            date:values.date,
+            clientid:this.state.id,
+            // jobid:values.id,
+            date:this.state.date,
+            company:values.company,
             desg:values.desg,
             salary:values.salary,
             location:values.location,
             desc:values.desc
         }
-        axios.post(`http://localhost:2040/jobs/add`,{jobs})
+        axios.post(`http://localhost:2040/jobs/add`,jobs,{
+            responseMethod:"POST"
+        })
         .then(res=>{
             if(res.data){
                 window.location.href=`/jobs/${this.state.id}`
@@ -49,19 +52,19 @@ class NewJob extends Component{
                     <Row className="form-group" md={12}>
                         <Label htmlFor="clientId" md={3}>Client Id:</Label>
                         <Col>
-                        <Control.text className="form-control" model=".clientId" id="clientId" value={this.state.id} readOnly name="clientId"></Control.text>
-                        </Col>
-                    </Row>
-                    <Row className="form-group">
-                        <Label htmlFor="id" md={3}>Job Id:</Label>
-                        <Col>
-                        <Control.text className="form-control" model=".id" id="id" name="id"></Control.text>
+                        <Control.password className="form-control" model=".clientId" id="clientId" value={this.state.id} readOnly name="clientId"></Control.password>
                         </Col>
                     </Row>
                     <Row className="form-group">
                         <Label htmlFor="date" md={3}>Joining Date</Label>
                         <Col>
                         <DatePicker onChange={this.handleChange} selected={this.state.date} className="form-control" model=".date" id="date" name="date"></DatePicker>
+                        </Col>
+                    </Row>
+                    <Row className="form-group">
+                        <Label md={3} htmlFor="company">Company:</Label>
+                        <Col>
+                        <Control.text className="form-control" model=".company" id="company" name="company"></Control.text>
                         </Col>
                     </Row>
                     <Row className="form-group">

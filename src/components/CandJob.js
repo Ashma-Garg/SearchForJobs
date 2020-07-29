@@ -7,29 +7,30 @@ class Jobs extends Component{
     constructor(props){
         super(props);
         this.state={
-            id:'',
+            Candid:this.props.match.params.id,
+            // Applied:"success",
             disp:''
         };
-        this.deleteJob=this.deleteJob.bind(this);
     }
-    deleteJob(jobid){
-        console.log("Dlete data");
-        axios.get(`http://localhost:2040/jobs/delete/${jobid}`)
-        .then(response=>{
-            this.componentDidMount();
+    AddToApplied(JobId){
+        // console.log(JobId);
+        // console.log(this.state.Candid);
+        axios.post(`http://localhost:2040/candidate/addAppliedJob/${this.state.Candid}`,{JobId})
+        .then(res=>{
+            console.log(res.data);
         })
     }
     componentDidMount(){
-        this.setState({
-            id:this.props.match.params.id
-        });
+        // this.setState({
+        //     id:this.props.match.params.id
+        // });
         setTimeout(()=>{
-            axios.get(`http://localhost:2040/jobs/${this.state.id}`)
+            axios.get(`http://localhost:2040/jobs/`)
             .then(res=>{
                 this.setState({
                     disp:res.data.map((jobs)=>{
                         return(
-                        <Col className="col-md-6 mb-5">
+                        <Col className="col-sm-12 col-md-6 mb-5">
                         <Card className="shadow-lg p-3 mb-5 bg-white rounded">
                             <CardTitle style={{backgroundColor:"#8feb34",padding:"10px",color:"#eb4f34"}}><h3 style={{fontWeight:"bolder"}}>{jobs.Company}</h3></CardTitle>
                             <CardBody>
@@ -55,9 +56,8 @@ class Jobs extends Component{
                                 </Row>
                                 <Row>
                                     <Col>
-                                        <Button className="col-sm-6 col-md-6" color="danger" onClick={()=>this.deleteJob(jobs._id)}>Delete</Button>
+                                    <Button onClick={()=>this.AddToApplied(jobs._id)} className="col-md-6" color="success">Apply Now</Button>
                                     </Col>
-                                   
                                 </Row>
                             </CardBody>
                         </Card>
@@ -74,14 +74,9 @@ class Jobs extends Component{
     render(){
         return(
             <div style={{padding:"5vh",backgroundColor:"#3c424d",minHeight:"100vh"}}>
-                <Row>
-                    <Col className="col-12 col-md-8"></Col>
-                    <Col>
-                    <Link to={`/newJob/${this.state.id}`}>
-                    <Button className="col-12 col-md-4" color="primary" style={{marginBottom:"7vh"}}>Add Jobs</Button>
-                    </Link>
-                    </Col>
-                </Row>
+                <Link to={`/appliedJob/${this.state.Candid}`}>
+                    <Button className="btn btn-lg" color="warning" style={{marginBottom:"7vh"}}>Applied List</Button>
+                </Link>
                 <div class="container">
                 <Row>
                 {this.state.disp}

@@ -6,7 +6,8 @@ import CandReg from './CandReg';
 import Client from './ClientLogin';
 import Jobs from './Jobs';
 import NewJobs from './NewJob';
-
+import CandJob from './CandJob';
+import AppliedJob from './AppliedJob';
 class Main extends Component{
     constructor(props){
         super(props);
@@ -21,7 +22,7 @@ class Main extends Component{
     // }
     render(){
         return(
-            <div className="container">
+            <div>
                 <Switch>
                     <Route exact path="/" component={Login}></Route>
                     <Route exact path="/client" component={()=><Client/>}></Route>
@@ -29,6 +30,8 @@ class Main extends Component{
                     <Route exact path="/clientregister" component={ClientReg}></Route>
                     <Route exact path="/jobs/:id" component={Jobs}></Route>
                     <Route exact path="/newJob/:id" component={NewJobs}></Route>
+                    <Route exact path="/candidateJob/:id" component={CandJob}></Route>
+                    <Route exact path="/appliedJob/:id" component={AppliedJob}></Route>
                     <Redirect to='/'></Redirect>
                 </Switch>
             </div>

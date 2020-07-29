@@ -2,16 +2,16 @@ var mongoose=require('mongoose');
 
 var JobsSchema=mongoose.Schema({
     ClientId:{
-        type:Number,
+        type:String,
         required:true
     },
     CandidateId:{
-        type:Number
+        type:String
     },
-    Id:{
-        required:true,
-        type:Number
-    },
+    // Id:{
+    //     required:true,
+    //     type:Number
+    // },
     JoiningDate:{
         required:true,
         type:Date

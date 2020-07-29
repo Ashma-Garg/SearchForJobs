@@ -18,11 +18,11 @@ var ClientSchema=mongoose.Schema({
     Company:{
         required:true,
         type:String
-    },
-    Id:{
-        required:true,
-        type:Number
     }
+    // Id:{
+    //     required:true,
+    //     type:Number
+    // }
 
 });
 

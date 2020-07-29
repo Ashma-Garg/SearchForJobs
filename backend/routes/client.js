@@ -13,6 +13,10 @@ router.use(session({
     resave: true,
     saveUninitialized: true,
 }));
+
+// Client.remove({},function(err){
+//     if(err) console.log(err);
+// })
 router.use(passport.initialize());
 router.use(passport.session());
 
@@ -50,7 +54,7 @@ router.post('/add',function(req,res){
                             Email:req.body.email,
                             Password:password,
                             Company:req.body.company,
-                            Id:req.body.id
+                            // Id:req.body.id
                         }).save((error,data)=>{
                             if(error) console.log(error);
                             else{
@@ -87,12 +91,23 @@ router.post('/login',function(req,res){
                 if(match){
                     err="Successfully Login";
                     // console.log(data._id);
-                    res.json({err:err,status:200,id:data.Id});
+                    res.json({err:err,status:200,id:data._id});
                 }
             })
         }
     })
 });
 
-
+router.get('/delete/:id',function(req,res){
+    Client.findOneAndDelete({Id:req.params.id},function(err){
+        if(err) console.log(err);
+        console.log("Data deleted");
+    })
+    setTimeout(()=>{
+        Client.find({},function(err,data){
+        res.json(data);
+        })
+    },1000
+    );
+})
 module.exports=router;

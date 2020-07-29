@@ -1,3 +1,6 @@
+const { json } = require('body-parser');
+const { route } = require('./client.js');
+
 var router=require('express').Router();
 var Jobs=require('../models/Jobs.js'),
 bcrypt=require('bcryptjs'),
@@ -16,20 +19,22 @@ router.use(session({
 router.use(passport.initialize());
 router.use(passport.session());
 
-// Jobs({
-//     ClientId:"10",
-//     Id:"1",
-//     JoiningDate:new Date(),
-//     Designation:"Software Engineer",
-//     Salary:"Rs. 11,00,000",
-//     Location:"Bangalore",
-//     Desc:"Required skills are blah blah blah"
-// }).save((err,data)=>{
+// Jobs.remove({},function(err){
 //     if(err) console.log(err);
-//     else
-//     console.log(data);
 // })
 
+router.get('/',function(req,res){
+    Jobs.find({},function(err,data){
+        if(err) console.log(err);
+        res.json(data);
+    })
+})
+router.get('/data/:id',function(req,res){
+    Jobs.find({_id:req.params.id},function(err,data){
+        if(err) console.log(err);
+        res.json(data);
+    })
+})
 router.get('/:id',function(req,res){
     var jobId=req.params.id;
     Jobs.find({ClientId:jobId},function(err,data){
@@ -42,8 +47,9 @@ router.get('/:id',function(req,res){
 router.post('/add',function(req,res){
     Jobs({
     ClientId:req.body.clientid,
-    Id:req.body.id,
+    // Id:req.body.jobid,
     JoiningDate:req.body.date,
+    Company:req.body.company,
     Designation:req.body.desg,
     Salary:req.body.salary,
     Location:req.body.location,
@@ -53,6 +59,17 @@ router.post('/add',function(req,res){
     else
     res.json(data);
 })
+})
+
+router.get('/delete/:id',function(req,res){
+    Jobs.findByIdAndDelete(req.params.id,function(err){
+        console.log("Job Deleted");
+    })
+    // setTimeout(()=>{
+    //     Jobs.find({},function(err,data){
+    //         res.json(data);
+    //     })
+    // })
 })
 
 module.exports=router;

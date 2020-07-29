@@ -13,14 +13,13 @@ var CandidateSchema=mongoose.Schema({
         required:true,
         type:String
     },
-    Id:{
-        type:Number
-    },
-    Accepted:[{
-        id:{
-            type:Number
-        }
-    }]
+    // Id:{
+    //     required:true,
+    //     type:Number
+    // },
+    Accepted:[
+            {type:String}
+    ]
 
 
 });

@@ -33,8 +33,10 @@ mongoose.connect(url,{useUnifiedTopology: true,useNewUrlParser:true}).then(()=>{
 
 var client=require('./routes/client');
 var job=require('./routes/jobs');
+var candidate=require('./routes/candidate');
 app.use('/client',client);
 app.use('/jobs',job);
+app.use('/candidate',candidate);
 app.listen(process.env.PORT || 2040, process.env.ID,function(req,res){
     console.log("Server Started....");
 })
