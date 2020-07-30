@@ -5,9 +5,9 @@ var JobsSchema=mongoose.Schema({
         type:String,
         required:true
     },
-    CandidateId:{
+    CandidateId:[{
         type:String
-    },
+    }],
     // Id:{
     //     required:true,
     //     type:Number

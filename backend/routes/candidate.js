@@ -79,9 +79,15 @@ router.post('/login',function(req,res){
 
 router.post('/addAppliedJob/:candid',function(req,res){
     var candId=req.params.candid;
-    console.log(req.body.JobId);
-    console.log(candId);
+    // console.log(req.body.JobId);
+    // console.log(candId);
     // console.log(jobid);
+    // 5f215f9aee531039a8d4691a
+    // Candidate.findByIdAndUpdate(candId,{$pullAll:{Accepted:[req.body.JobId]}},function(err,data){
+    //     if(err) console.log(err);
+    //     else
+    //     res.send(data);
+    // })
     Candidate.findByIdAndUpdate(candId,{$push:{Accepted:req.body.JobId}},function(err,data){
         if(err) console.log(err);
         else

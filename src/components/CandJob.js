@@ -8,22 +8,24 @@ class Jobs extends Component{
         super(props);
         this.state={
             Candid:this.props.match.params.id,
-            // Applied:"success",
-            disp:''
+            Applied:false,
+            disp:'',
+            color:"btn-success col-md-6"
         };
     }
     AddToApplied(JobId){
-        // console.log(JobId);
-        // console.log(this.state.Candid);
-        axios.post(`http://localhost:2040/candidate/addAppliedJob/${this.state.Candid}`,{JobId})
-        .then(res=>{
-            console.log(res.data);
-        })
+        // axios.post(`http://localhost:2040/candidate/addAppliedJob/${this.state.Candid}`,{JobId})
+        // .then(res=>{
+        //     console.log(res.data);
+        // })
+        // axios.post(`http://localhost:2040/jobs/addAppliedJob/${this.state.Candid}`,{JobId})
+        // .then(res=>{
+        //     console.log(res.data);
+        // })
     }
     componentDidMount(){
-        // this.setState({
-        //     id:this.props.match.params.id
-        // });
+
+
         setTimeout(()=>{
             axios.get(`http://localhost:2040/jobs/`)
             .then(res=>{
@@ -56,7 +58,7 @@ class Jobs extends Component{
                                 </Row>
                                 <Row>
                                     <Col>
-                                    <Button onClick={()=>this.AddToApplied(jobs._id)} className="col-md-6" color="success">Apply Now</Button>
+                                    <Button onClick={()=>this.AddToApplied(jobs._id)} className={this.state.color} >Apply Now</Button>
                                     </Col>
                                 </Row>
                             </CardBody>

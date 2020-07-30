@@ -30,9 +30,28 @@ router.get('/',function(req,res){
     })
 })
 router.get('/data/:id',function(req,res){
-    Jobs.find({_id:req.params.id},function(err,data){
+    var query=req.params.id;
+    var querySplit=query.split(',');
+    console.log(querySplit.length);
+    // Jobs.find({_id:{$elemMatch:[querySplit]}},function(err,data){
+    //     if(err) console.log(err);
+    //     res.json(data);
+    // })
+})
+router.post('/addAppliedJob/:candid',function(req,res){
+    Jobs.findByIdAndUpdate(req.body.JobId,{$push:{CandidateId:req.params.candid}},function(err,data){
         if(err) console.log(err);
         res.json(data);
+    })
+    // Jobs.findByIdAndUpdate(req.body.JobId,{$pullAll:{CandidateId:[req.params.candid]}},function(err,data){
+    //     if(err) console.log(err);
+    //     res.json(data);
+    // })
+})
+router.get('/appliedList/:candid',function(req,res){
+    Jobs.find({CandidateId:{$elemMatch:{$eq:req.params.candid}}},function(err,data){
+        if(err) console.log(err);
+        else res.json(data);
     })
 })
 router.get('/:id',function(req,res){

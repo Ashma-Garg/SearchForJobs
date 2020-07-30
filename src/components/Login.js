@@ -53,7 +53,7 @@ class Login extends Component{
                     <Row className="form-group">
                         <Label md={{size:2}}htmlFor="password" >Password</Label>
                         <Col>
-                        <Control.text model=".password" name="password" id="password" className="form-control" placeholder="Password"/>
+                        <Control.password model=".password" name="password" id="password" className="form-control" placeholder="Password"/>
                         </Col>
                     </Row>
                     <Row>
