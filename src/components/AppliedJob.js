@@ -52,6 +52,12 @@ class AppliedJob extends Component{
                                     </Col>
                                    
                                 </Row> */}
+                                <Row>
+                                    <Col>
+                                    <p className="text-secondary">Applications Received: {jobs.CandidateId.length}</p>
+                                    </Col>
+                                   
+                                </Row>
                             </CardBody>
                         </Card>
                         </Col>

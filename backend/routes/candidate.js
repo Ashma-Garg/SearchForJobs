@@ -7,6 +7,11 @@ const Client = require('../models/Client');
 // Candidate.remove({},function(err){
 //     console.log("Dleete");
 // })
+router.get('/',function(req,res){
+    Candidate.find({},function(err,data){
+        res.json(data);
+    })
+})
 router.get('/data/:candid',function(req,res){
     Candidate.findById(req.params.candid,function(err,data){
         res.json(data);
@@ -79,20 +84,28 @@ router.post('/login',function(req,res){
 
 router.post('/addAppliedJob/:candid',function(req,res){
     var candId=req.params.candid;
-    // console.log(req.body.JobId);
-    // console.log(candId);
-    // console.log(jobid);
-    // 5f215f9aee531039a8d4691a
-    // Candidate.findByIdAndUpdate(candId,{$pullAll:{Accepted:[req.body.JobId]}},function(err,data){
+    // Candidate.findByIdAndUpdate(candId,{$pullAll:{Accepted:["899"]}},function(err,data){
     //     if(err) console.log(err);
     //     else
     //     res.send(data);
     // })
-    Candidate.findByIdAndUpdate(candId,{$push:{Accepted:req.body.JobId}},function(err,data){
-        if(err) console.log(err);
-        else
-        res.send(data);
+    var length;
+    Candidate.findById(candId,function(err,data){
+        length=data.Accepted.length;
     })
+
+    setTimeout(()=>{
+        console.log(length);
+        if(length<5){
+            Candidate.findByIdAndUpdate(candId,{$push:{Accepted:req.body.JobId}},function(err,data){
+                    res.json(data);
+            })
+            }
+            else{
+                res.json({err:"You Can Only Apply For maximum 5 jobs",status:400});
+            }
+    },1000);    
+
 })
 
 module.exports=router;

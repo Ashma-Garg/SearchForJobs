@@ -3,6 +3,7 @@ const { route } = require('./client.js');
 
 var router=require('express').Router();
 var Jobs=require('../models/Jobs.js'),
+Candidate=require('../models/Candidate.js'),
 bcrypt=require('bcryptjs'),
 session=require('express-session'),
 passport=require('passport'),
@@ -39,10 +40,24 @@ router.get('/data/:id',function(req,res){
     // })
 })
 router.post('/addAppliedJob/:candid',function(req,res){
-    Jobs.findByIdAndUpdate(req.body.JobId,{$push:{CandidateId:req.params.candid}},function(err,data){
-        if(err) console.log(err);
-        res.json(data);
+    var length;
+    Candidate.findById(req.params.candid,function(err,data){
+        length=data.Accepted.length;
     })
+
+    setTimeout(()=>{
+        // console.log(length);
+        if(length<5){
+            Jobs.findByIdAndUpdate(req.body.JobId,{$push:{CandidateId:req.params.candid}},function(err,data){
+                if(err) console.log(err);
+                res.json(data);
+            })
+            }
+            else{
+                res.json({err:"You Can Only Apply For maximum 5 jobs",status:400});
+            }
+    },1000); 
+
     // Jobs.findByIdAndUpdate(req.body.JobId,{$pullAll:{CandidateId:[req.params.candid]}},function(err,data){
     //     if(err) console.log(err);
     //     res.json(data);
@@ -79,16 +94,16 @@ router.post('/add',function(req,res){
     res.json(data);
 })
 })
-
+// ,{$pullAll:{Accepted:[req.params.id]}}
 router.get('/delete/:id',function(req,res){
     Jobs.findByIdAndDelete(req.params.id,function(err){
         console.log("Job Deleted");
     })
-    // setTimeout(()=>{
-    //     Jobs.find({},function(err,data){
-    //         res.json(data);
-    //     })
-    // })
+
+    Candidate.updateMany({Accepted:{$elemMatch:{$eq:req.params.id}}},{$pullAll:{Accepted:[req.params.id]}},function(err,data){
+            res.json(data);
+    })
+
 })
 
 module.exports=router;
