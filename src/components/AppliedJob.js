@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import axios from 'axios';
 // import { Row } from 'reactstrap';
-import {Card,CardTitle,CardBody,Button,Col,Row} from 'reactstrap';
+import {Card,CardTitle,CardBody,Col,Row} from 'reactstrap';
 // import {withRouter,Link} from 'react-router-dom';
 
 class AppliedJob extends Component{

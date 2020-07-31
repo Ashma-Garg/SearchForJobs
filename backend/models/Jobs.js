@@ -8,10 +8,7 @@ var JobsSchema=mongoose.Schema({
     CandidateId:[{
         type:String
     }],
-    // Id:{
-    //     required:true,
-    //     type:Number
-    // },
+
     JoiningDate:{
         required:true,
         type:Date

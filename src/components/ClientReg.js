@@ -12,7 +12,6 @@ import {LocalForm,Control,Errors} from 'react-redux-form';
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
 const minLength = (len) => (val) =>  val?(val.length >= len):1;
-const isNumber = (val) => !(val)||!isNaN((val));
 const validEmail = (val) => !(val)||/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val);
 const pass= (val) => !(val)||/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/i.test(val);
 class ClientLogin extends Component{

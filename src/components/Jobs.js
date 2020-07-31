@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import axios from 'axios';
 import {Card,CardTitle,CardBody,Button,Col,Row, ModalHeader, ModalBody,Label,Modal} from 'reactstrap';
-import {withRouter,Link} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 import DatePicker from "react-datepicker";
  
 import "react-datepicker/dist/react-datepicker.css"; 
