@@ -2,6 +2,7 @@ import React,{Component} from 'react';
 import axios from 'axios';
 import {Card,CardTitle,CardBody,Button,Col,Row} from 'reactstrap';
 import {withRouter,Link} from 'react-router-dom';
+import Header from './HeaderCandidate';
 // import { json } from 'body-parser';
 class Jobs extends Component{
     constructor(props){
@@ -73,7 +74,7 @@ class Jobs extends Component{
                             
                         }
                         return(
-                        <Col className="col-sm-12 col-md-6 mb-5">
+                        <Col className="col-12 col-md-10 col-lg-6 mb-5">
                         <Card className="shadow-lg p-3 mb-5 bg-white rounded">
                             <CardTitle style={{backgroundColor:"#8feb34",padding:"10px",color:"#eb4f34"}}><h3 style={{fontWeight:"bolder"}}>{jobs.Company}</h3></CardTitle>
                             <CardBody>
@@ -99,7 +100,8 @@ class Jobs extends Component{
                                 </Row>
                                 <Row>
                                     <Col>
-                                        <Button id={jobs._id} onClick={()=>this.AddToApplied(jobs._id)} className={this.state.disable?'disabled col-md-6':"btn-success col-md-6"}>{this.state.disable?"Applied":"Apply Now"}</Button>
+                                    <p></p>
+                                        <Button id={jobs._id} onClick={()=>this.AddToApplied(jobs._id)} className={this.state.disable?'disabled col-md-6':new Date(jobs.JoiningDate)<new Date()?'disabled col-md-6':"btn-success col-md-6"}>{this.state.disable?"Applied":"Apply"}</Button>
                                     </Col>
                                 </Row>
                                 <Row>
@@ -107,6 +109,11 @@ class Jobs extends Component{
                                         <p className="text-secondary">Applications Received: {this.state.Applied}</p>
                                     </Col>
                                    
+                                </Row>
+                                <Row>
+                                    <Col>
+                                    {new Date(jobs.JoiningDate)<new Date()?<p className="disabled fa fa-warning fa-lg m-3">Expired</p>:null}
+                                    </Col>
                                 </Row>
                             </CardBody>
                         </Card>
@@ -122,17 +129,21 @@ class Jobs extends Component{
     }
     render(){
         return(
-            <div style={{padding:"5vh",backgroundColor:"#3c424d",minHeight:"100vh"}}>
+            <div>
+                <Header id={this.props.match.params.id}/>
+                <div style={{padding:"5vh",backgroundColor:"#3c424d",minHeight:"100vh"}}>
                 
-                <Link to={`/appliedJob/${this.state.Candid}`}>
+                {/* <Link to={`/appliedJob/${this.state.Candid}`}>
                     <Button className="btn btn-lg" color="warning" style={{marginBottom:"7vh"}}>Applied List</Button>
-                </Link>
+                </Link> */}
                 <div class="container">
                 <Row>
                 {this.state.disp}
                 </Row>
                 </div>
             </div>
+            </div>
+            
         );
     }
 }

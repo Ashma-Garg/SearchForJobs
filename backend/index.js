@@ -27,7 +27,7 @@ app.use(methodOverride('_method'));
 app.use(cors());
 var url="mongodb://localhost/jobs";
 
-mongoose.connect(url,{useUnifiedTopology: true,useNewUrlParser:true}).then(()=>{
+mongoose.connect(url,{useUnifiedTopology: true,useNewUrlParser:true,useFindAndModify: false}).then(()=>{
     console.log("DataBase Connected");
 });
 

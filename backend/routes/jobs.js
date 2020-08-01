@@ -31,13 +31,9 @@ router.get('/',function(req,res){
     })
 })
 router.get('/data/:id',function(req,res){
-    var query=req.params.id;
-    var querySplit=query.split(',');
-    console.log(querySplit.length);
-    // Jobs.find({_id:{$elemMatch:[querySplit]}},function(err,data){
-    //     if(err) console.log(err);
-    //     res.json(data);
-    // })
+    Jobs.findById(req.params.id,function(err,data){
+        res.json(data);
+    })
 })
 router.post('/addAppliedJob/:candid',function(req,res){
     var length;
@@ -93,6 +89,22 @@ router.post('/add',function(req,res){
     else
     res.json(data);
 })
+})
+router.post('/edit/:id',function(req,res){
+
+    Jobs.findByIdAndUpdate(req.params.id,{$set: 
+        {
+            JoiningDate:req.body.date,
+            Company:req.body.company,
+            Designation:req.body.desg,
+            Salary:req.body.salary,
+            Location:req.body.location,
+            Desc:req.body.desc
+        }
+        },function(err,data){
+            if(err) console.log(err);
+            else res.json(data);
+        })
 })
 // ,{$pullAll:{Accepted:[req.params.id]}}
 router.get('/delete/:id',function(req,res){

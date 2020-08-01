@@ -1,13 +1,12 @@
 import React,{Component} from 'react';
 import axios from 'axios';
+import 'font-awesome/css/font-awesome.css';
 import {Card,CardTitle,CardBody,Button,Col,Row, ModalHeader, ModalBody,Label,Modal} from 'reactstrap';
 import {withRouter} from 'react-router-dom';
 import DatePicker from "react-datepicker";
- 
+import Header from './HeaderClient';
 import "react-datepicker/dist/react-datepicker.css"; 
 import {LocalForm,Control} from 'react-redux-form';
-// import { Label, Button,Row,Col } from 'reactstrap';
-// import { json } from 'body-parser';
 class Jobs extends Component{
     constructor(props){
         super(props);
@@ -15,13 +14,77 @@ class Jobs extends Component{
             id:'',
             disp:'',
             isModalOpen:false,
-            date:new Date()
+            date:new Date(),
+            isModalOpenEdit:false,
+            JoiningDate:'',
+            Company:'',
+            Designation:'',
+            Salary:'',
+            Location:'',
+            Desc:'',
+            JobId:''
         };
         this.deleteJob=this.deleteJob.bind(this);
+        this.editJob=this.editJob.bind(this);
         this.toggleModal=this.toggleModal.bind(this);
+        this.toggleModalEdit=this.toggleModalEdit.bind(this);
         this.handleSubmit=this.handleSubmit.bind(this);
-        this.handleChange=this.handleChange.bind(this);
+        this.handleSubmitEdit=this.handleSubmitEdit.bind(this);
+        this.handleCompany=this.handleCompany.bind(this);
+        this.handleDesg=this.handleDesg.bind(this);
+        this.handleLocation=this.handleLocation.bind(this);
+        this.handleSalary=this.handleSalary.bind(this);
+        this.handleDesc=this.handleDesc.bind(this);
+        this.handleDate=this.handleDate.bind(this);
+        // this.handleChange=this.handleChange.bind(this);
+
     }
+    handleSubmitEdit(values){
+        const jobs={
+            clientid:this.state.id ,
+            // jobid:values.id,
+            date:this.state.JoiningDate,
+            company:  this.state.Company, 
+            desg:  this.state.Designation,
+            salary:  this.state.Salary,
+            location:  this.state.Location,
+            desc:  this.state.Desc
+        };
+        // alert(JSON.stringify(jobs))
+        axios.post(`http://localhost:2040/jobs/edit/${this.state.JobID}`,jobs,{
+            responseMethod:"POST"
+        })
+        .then(res=>{
+            if(res.data){
+                // console.log(res.data);
+                window.location.href=`/jobs/${this.state.id}`
+            }
+        })
+    }
+    toggleModalEdit(){
+        this.setState({
+            isModalOpenEdit:!this.state.isModalOpenEdit
+        });
+    }
+    editJob(jobid){
+        this.setState({
+            isModalOpenEdit:!this.state.isModalOpenEdit
+        });
+            axios.get(`http://localhost:2040/jobs/data/${jobid}`)
+            .then(res=>{
+                this.setState({
+                    JobID:res.data._id,
+                    JoiningDate:new Date(res.data.JoiningDate),
+                    Company:res.data.Company,
+                    Designation:res.data.Designation,
+                    Salary:res.data.Salary,
+                    Location:res.data.Location,
+                    Desc:res.data.Desc
+                })
+            })
+        
+    }
+
     toggleModal(){
         this.setState({
             isModalOpen:!this.state.isModalOpen
@@ -37,6 +100,36 @@ class Jobs extends Component{
     handleChange=date=>{
         this.setState({
             date:date
+        });
+    }
+    handleDate=date=>{
+        this.setState({
+            JoiningDate:date
+        });
+    }
+    handleCompany(event){
+        this.setState({
+            Company:event.target.value
+        });
+    }
+    handleDesg(event){
+        this.setState({
+            Designation:event.target.value
+        });
+    }
+    handleSalary(event){
+        this.setState({
+            Salary:event.target.value
+        });
+    }
+    handleLocation(event){
+        this.setState({
+            Location:event.target.value
+        });
+    }
+    handleDesc(event){
+        this.setState({
+            Desc:event.target.value
         });
     }
     handleSubmit(values){
@@ -69,7 +162,7 @@ class Jobs extends Component{
                 this.setState({
                     disp:res.data.map((jobs)=>{
                         return(
-                        <Col className="col-md-6 mb-5">
+                        <Col className="col-12 col-md-10 col-lg-6 mb-5">
                         <Card className="shadow-lg p-3 mb-5 bg-white rounded">
                             <CardTitle style={{backgroundColor:"#8feb34",padding:"10px",color:"#eb4f34"}}><h3 style={{fontWeight:"bolder"}}>{jobs.Company}</h3></CardTitle>
                             <CardBody>
@@ -95,16 +188,26 @@ class Jobs extends Component{
                                 </Row>
                                 <Row>
                                     <Col>
-                                        <Button className="col-sm-6 col-md-6" color="danger" onClick={()=>this.deleteJob(jobs._id)}>Delete</Button>
+                                        <Button className="col-sm-4 col-md-4" color="danger" onClick={()=>this.deleteJob(jobs._id)}>Delete</Button>
+                                        <Button className="col-sm-4 offset-1 col-md-4" color="primary" onClick={()=>this.editJob(jobs._id)}>Edit</Button>
                                     </Col>
+                                    {/* <Col>
+                                        
+                                    </Col> */}
                                    
                                 </Row>
                                 <Row>
                                     <Col>
-                                    <p className="text-secondary">Applications Received: {jobs.CandidateId.length}</p>
+                                    {new Date(jobs.JoiningDate)<new Date()?<p className="disabled fa fa-warning fa-lg m-3">Expired</p>:null}
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col>
+                                    <p className="text-secondary m-2">Applications Received: {jobs.CandidateId.length}</p>
                                     </Col>
                                    
                                 </Row>
+                                
                             </CardBody>
                         </Card>
                         </Col>
@@ -119,7 +222,10 @@ class Jobs extends Component{
     }
     render(){
         return(
-            <div style={{padding:"5vh",backgroundColor:"#3c424d",minHeight:"100vh"}}>
+            <div>
+                <Header id={this.state.id}/>
+                <div style={{padding:"5vh",backgroundColor:"#3c424d",minHeight:"100vh"}}>
+                
                 <Row>
                     <Col className="col-12 col-md-8"></Col>
                     <Col>
@@ -192,7 +298,73 @@ class Jobs extends Component{
                      </div>
                     </ModalBody>
                 </Modal>
+
+
+
+
+                <Modal style={{minWidth:"60%"}} isOpen={this.state.isModalOpenEdit} toggle={this.toggleModalEdit}>
+                        <ModalHeader style={{backgroundColor:"#3464eb",color:"white"}} toggle={this.toggleModalEdit}>
+                            <h3>Edit Job</h3>
+                        </ModalHeader>
+                        <ModalBody style={{backgroundColor:"#cbcdd4"}}>
+                        <div class="container">
+                            <LocalForm onSubmit={this.handleSubmitEdit} className="col-md-10">
+                                <Row className="form-group" md={12}>
+                                    <Label htmlFor="clientId" md={3}>Client Id:</Label>
+                                    <Col>
+                                        <Control.password className="form-control" model=".clientId" id="clientId" value={this.state.id} readOnly name="clientId"></Control.password>
+                                    </Col>
+                                </Row>
+                                <Row className="form-group">
+                                    <Label htmlFor="date" md={3}>Joining Date</Label>
+                                    <Col>
+                                        <DatePicker onChange={this.handleDate} selected={this.state.JoiningDate} className="form-control" model=".date" id="date" name="date"></DatePicker>
+                                    </Col>      
+                                </Row>
+                                <Row className="form-group">
+                                    <Label md={3} htmlFor="company">Company:</Label>
+                                    <Col>
+                                        <Control.text className="form-control" onChange={this.handleCompany} value={this.state.Company} model=".company" id="company" name="company"></Control.text>
+                                    </Col>
+                                </Row>
+                                <Row className="form-group">
+                                    <Label md={3} htmlFor="desg">Desigantion:</Label>
+                                    <Col>
+                                        <Control.text className="form-control" onChange={this.handleDesg} value={this.state.Designation} model=".desg" id="desg" name="desg"></Control.text>
+                                    </Col>
+                                </Row>
+                                <Row className="form-group">
+                                    <Label md={3} htmlFor="salary">Salary:</Label>
+                                    <Col>   
+                                        <Control.text className="form-control" onChange={this.handleSalary} value={this.state.Salary} model=".salary" id="salary" name="salary"></Control.text>
+                                    </Col>
+                                </Row>
+                                <Row className="form-group">
+                                    <Label md={3} htmlFor="location">Location:</Label>
+                                    <Col>
+                                        <Control.text className="form-control" onChange={this.handleLocation} value={this.state.Location} model=".location" id="location" name="location"></Control.text>
+                                    </Col>
+                                </Row>
+                                <Row className="form-group">
+                                    <Label md={3} htmlFor="desc">Description:</Label>
+                                    <Col>
+                                        <Control.textarea rows="5" className="form-control" onChange={this.handleDesc} value={this.state.Desc} model=".desc" id="desc" name="desc"/>
+                                    </Col>  
+                                </Row>
+                                <Row className="form-group">
+                                    <Col md={{offset:4}}>
+                                        <Button type="submit" color="primary">Submit</Button>
+                                    </Col>
+                                </Row>  
+                            </LocalForm>
+                    {/* this nkjksmnk g  jen vwn kjvgw mw vjnwk */}
+                         </div>
+                        </ModalBody>
+                    </Modal>
+                {/* {this.state.ModalDisp} */}
             </div>
+            </div>
+            
         );
     }
 }

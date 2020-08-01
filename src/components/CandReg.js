@@ -54,7 +54,7 @@ class ClientLogin extends Component{
                 <h3 style={{padding:"20px"}}>Register As Candidate...</h3>
                 <LocalForm className="col-md-8 offset-md-2  shadow-lg p-3 mb-5 bg-white rounded" onSubmit={this.handleSubmit}>
                     <Row className="form-group">
-                        <Label md={{size:2}} htmlFor="name">Name</Label>
+                        <Label sm={{size:2}} htmlFor="name">Name</Label>
                         <Col>
                         <Control.text model=".name" id="name" name="name" className="form-control" placeholder="Enter Your Name"
                         validators={{
@@ -71,7 +71,7 @@ class ClientLogin extends Component{
                         </Col>
                     </Row>
                     <Row className="form-group">
-                        <Label md={{size:2}} htmlFor="email">Email</Label>
+                        <Label sm={{size:2}} htmlFor="email">Email</Label>
                         <Col>
                         <Control.text model=".email" id="email" name="email" className="form-control" placeholder="Email"
                         validators={{
@@ -87,7 +87,7 @@ class ClientLogin extends Component{
                         </Col>
                     </Row>
                     <Row className="form-group">
-                        <Label md={{size:2}}htmlFor="password" >Password</Label>
+                        <Label sm={{size:2}}htmlFor="password" >Password</Label>
                         <Col>
                         <Control.password model=".password" name="password" id="password" className="form-control" placeholder="Password"
                         validators={{
@@ -103,7 +103,7 @@ class ClientLogin extends Component{
                         </Col>
                     </Row>
                     <Row className="form-group">
-                        <Label md={{size:2}}htmlFor="cpassword" >Confirm Password</Label>
+                        <Label sm={{size:2}}htmlFor="cpassword" >Confirm Password</Label>
                         <Col>
                         <Control.password model=".cpassword" name="cpassword" id="cpassword" className="form-control" placeholder="Re-enter Password"/>
                         </Col>

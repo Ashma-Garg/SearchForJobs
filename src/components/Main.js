@@ -7,11 +7,13 @@ import Client from './ClientLogin';
 import Jobs from './Jobs';
 import CandJob from './CandJob';
 import AppliedJob from './AppliedJob';
+
 class Main extends Component{
 
     render(){
         return(
             <div>
+                {/* <Header/> */}
                 <Switch>
                     <Route exact path="/" component={Login}></Route>
                     <Route exact path="/client" component={()=><Client/>}></Route>
