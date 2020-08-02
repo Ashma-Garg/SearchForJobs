@@ -28,6 +28,13 @@ router.get('/',function(req,res){
         }
     });
 });
+router.get('/data/:id',function(req,res){
+    console.log(req.params.id);
+    Client.findById(req.params.id,function(err,data){
+        if(err) console.log(err);
+        res.json(data);
+    })
+})
 router.post('/add',function(req,res){
     var password=req.body.password;
     var err;

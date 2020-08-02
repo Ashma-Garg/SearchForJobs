@@ -28,7 +28,6 @@ class ClientLogin extends Component{
             email:values.email,
             password:values.password,
             cpassword:values.cpassword,
-            // id:values.id
         }
         axios.post('http://localhost:2040/candidate/',cand)
         .then((res)=>{
@@ -43,7 +42,6 @@ class ClientLogin extends Component{
                 })
                 window.location.href='/';
             }
-            // console.log(res.data.status);
 
         });
     }
@@ -108,22 +106,6 @@ class ClientLogin extends Component{
                         <Control.password model=".cpassword" name="cpassword" id="cpassword" className="form-control" placeholder="Re-enter Password"/>
                         </Col>
                     </Row>
-                    {/* <Row className="form-group">
-                        <Label md={{size:2}}htmlFor="id" >Candidate Id</Label>
-                        <Col>
-                        <Control.text model=".id" name="id" id="id" className="form-control" placeholder="Enter Your Unique Id"
-                        validators={{
-                            required, isNumber
-                        }}
-                        />
-                        <Errors className="text-danger" show="touched" model=".id"
-                        messages={{
-                            required: "This Field is mandatory",
-                            isNumber: "Only Integers are allowed"
-                        }}
-                        />
-                        </Col>
-                    </Row> */}
                     <Row>
                         <Col md={{size:2,offset:4}}>
                         <Button type="submit" color="primary">Submit</Button>

@@ -22,7 +22,8 @@ class Jobs extends Component{
             Salary:'',
             Location:'',
             Desc:'',
-            JobId:''
+            JobId:'',
+            name:''
         };
         this.deleteJob=this.deleteJob.bind(this);
         this.editJob=this.editJob.bind(this);
@@ -36,13 +37,11 @@ class Jobs extends Component{
         this.handleSalary=this.handleSalary.bind(this);
         this.handleDesc=this.handleDesc.bind(this);
         this.handleDate=this.handleDate.bind(this);
-        // this.handleChange=this.handleChange.bind(this);
 
     }
     handleSubmitEdit(values){
         const jobs={
             clientid:this.state.id ,
-            // jobid:values.id,
             date:this.state.JoiningDate,
             company:  this.state.Company, 
             desg:  this.state.Designation,
@@ -50,13 +49,11 @@ class Jobs extends Component{
             location:  this.state.Location,
             desc:  this.state.Desc
         };
-        // alert(JSON.stringify(jobs))
         axios.post(`http://localhost:2040/jobs/edit/${this.state.JobID}`,jobs,{
             responseMethod:"POST"
         })
         .then(res=>{
             if(res.data){
-                // console.log(res.data);
                 window.location.href=`/jobs/${this.state.id}`
             }
         })
@@ -135,7 +132,6 @@ class Jobs extends Component{
     handleSubmit(values){
         const jobs={
             clientid:this.state.id,
-            // jobid:values.id,
             date:this.state.date,
             company:values.company,
             desg:values.desg,
@@ -156,6 +152,16 @@ class Jobs extends Component{
         this.setState({
             id:this.props.match.params.id
         });
+        setTimeout(()=>{
+            axios.get(`http://localhost:2040/client/data/${this.state.id}`)
+            .then(res=>{
+                this.setState({
+                    name:res.data.Name
+                });
+                // console.log(res.data);
+            })
+        },1000)
+        
         setTimeout(()=>{
             axios.get(`http://localhost:2040/jobs/${this.state.id}`)
             .then(res=>{
@@ -223,15 +229,13 @@ class Jobs extends Component{
     render(){
         return(
             <div>
-                <Header id={this.state.id}/>
-                <div style={{padding:"5vh",backgroundColor:"#3c424d",minHeight:"100vh"}}>
+                <Header id={this.state.id} name={this.state.name}/>
+                <div style={{padding:"5vh",backgroundColor:"#bed1cb",minHeight:"100vh"}}>
                 
                 <Row>
                     <Col className="col-12 col-md-8"></Col>
                     <Col>
-                    {/* <Link to={`/newJob/${this.state.id}`}> */}
                     <Button onClick={this.toggleModal} className="col-12 col-md-4" color="primary" style={{marginBottom:"7vh"}}>Add Jobs</Button>
-                    {/* </Link> */}
                     </Col>
                 </Row>
                 <div className="container">
@@ -240,10 +244,14 @@ class Jobs extends Component{
                 </Row>
                 </div>
                 <Modal style={{minWidth:"60%"}} isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
-                    <ModalHeader style={{backgroundColor:"#3464eb",color:"white"}} toggle={this.toggleModal}>
+                    <ModalHeader 
+                    style={{backgroundColor:"#3464eb",color:"white"}}
+                     toggle={this.toggleModal}>
                         <h3>Add New Job</h3>
                     </ModalHeader>
-                    <ModalBody style={{backgroundColor:"#cbcdd4"}}>
+                    <ModalBody 
+                    // style={{backgroundColor:"#cbcdd4"}}
+                    >
                     <div class="container">
                         <LocalForm onSubmit={this.handleSubmit} className="col-md-10">
                             <Row className="form-group" md={12}>
@@ -294,7 +302,6 @@ class Jobs extends Component{
                                 </Col>
                             </Row>  
                         </LocalForm>
-                {/* this nkjksmnk g  jen vwn kjvgw mw vjnwk */}
                      </div>
                     </ModalBody>
                 </Modal>
@@ -306,7 +313,9 @@ class Jobs extends Component{
                         <ModalHeader style={{backgroundColor:"#3464eb",color:"white"}} toggle={this.toggleModalEdit}>
                             <h3>Edit Job</h3>
                         </ModalHeader>
-                        <ModalBody style={{backgroundColor:"#cbcdd4"}}>
+                        <ModalBody 
+                        // style={{backgroundColor:"#cbcdd4"}}
+                        >
                         <div class="container">
                             <LocalForm onSubmit={this.handleSubmitEdit} className="col-md-10">
                                 <Row className="form-group" md={12}>
@@ -357,11 +366,9 @@ class Jobs extends Component{
                                     </Col>
                                 </Row>  
                             </LocalForm>
-                    {/* this nkjksmnk g  jen vwn kjvgw mw vjnwk */}
                          </div>
                         </ModalBody>
                     </Modal>
-                {/* {this.state.ModalDisp} */}
             </div>
             </div>
             

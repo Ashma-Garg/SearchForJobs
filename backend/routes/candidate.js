@@ -19,7 +19,6 @@ router.get('/data/:candid',function(req,res){
 })
 router.post('/',function(req,res){
 
-    // console.log(req.body.name + req.body.email + req.body.password + req.body.id);
     var err;
     if(req.body.password!=req.body.cpassword){
         err="Password Doesn't Match";

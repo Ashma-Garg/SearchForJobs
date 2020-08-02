@@ -19,6 +19,24 @@ router.use(session({
 }));
 router.use(passport.initialize());
 router.use(passport.session());
+// passport.serializeUser(function(Candidate,cb){
+//     cb(null,Candidate.id);
+// });
+// passport.deserializeUser(function(id,cb){
+//     LoginUser.findById(id,function(err,Candidate){
+//         cb(err,Candidate);
+//     });
+// });
+// var checkAuthent=function(req,res,next){
+//     if(req.isAuthenticated()){
+//         res.set('Cache-Control', 'no-cache,privete,no-store,must-revalidate,post-check=0,pre-checked=0');
+//         return next();
+//     }
+//     else{
+//         // req.flash('failure_message',"You Need to Login First");
+//         return res.redirect('/login');
+//     }
+// }
 
 // Jobs.remove({},function(err){
 //     if(err) console.log(err);
@@ -106,7 +124,6 @@ router.post('/edit/:id',function(req,res){
             else res.json(data);
         })
 })
-// ,{$pullAll:{Accepted:[req.params.id]}}
 router.get('/delete/:id',function(req,res){
     Jobs.findByIdAndDelete(req.params.id,function(err){
         console.log("Job Deleted");

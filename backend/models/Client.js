@@ -19,10 +19,6 @@ var ClientSchema=mongoose.Schema({
         required:true,
         type:String
     }
-    // Id:{
-    //     required:true,
-    //     type:Number
-    // }
 
 });
 

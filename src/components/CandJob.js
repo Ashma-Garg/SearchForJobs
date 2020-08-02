@@ -1,14 +1,14 @@
 import React,{Component} from 'react';
 import axios from 'axios';
 import {Card,CardTitle,CardBody,Button,Col,Row} from 'reactstrap';
-import {withRouter,Link} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 import Header from './HeaderCandidate';
-// import { json } from 'body-parser';
 class Jobs extends Component{
     constructor(props){
         super(props);
         this.state={
             Candid:"",
+            name:'',
             disp:'',
             disable:0,
             button:0,
@@ -21,7 +21,7 @@ class Jobs extends Component{
 
         axios.post(`http://localhost:2040/candidate/addAppliedJob/${this.state.Candid}`,{JobId})
         .then(res=>{
-            // console.log(res.data);
+            console.log("Added to Candidate Applied List");
         })
         axios.post(`http://localhost:2040/jobs/addAppliedJob/${this.state.Candid}`,{JobId})
         .then(res=>{
@@ -45,6 +45,13 @@ class Jobs extends Component{
         this.setState({
             Candid:this.props.match.params.id
         });
+
+        axios.get(`http://localhost:2040/candidate/data/${this.props.match.params.id}`)
+        .then(res=>{
+            this.setState({
+                name:res.data.Name
+            });
+        })
         setTimeout(()=>{
             axios.get(`http://localhost:2040/jobs/`)
             .then(res=>{
@@ -76,7 +83,7 @@ class Jobs extends Component{
                         return(
                         <Col className="col-12 col-md-10 col-lg-6 mb-5">
                         <Card className="shadow-lg p-3 mb-5 bg-white rounded">
-                            <CardTitle style={{backgroundColor:"#8feb34",padding:"10px",color:"#eb4f34"}}><h3 style={{fontWeight:"bolder"}}>{jobs.Company}</h3></CardTitle>
+                            <CardTitle style={{backgroundColor:"#c8e6e5",padding:"10px",color:"#eb4f34"}}><h3 style={{fontWeight:"bolder"}}>{jobs.Company}</h3></CardTitle>
                             <CardBody>
                                 <Row>
                                     <Col className="col-sm-4"><p style={{fontWeight:"bolder"}}>Designation:</p> </Col>
@@ -130,12 +137,9 @@ class Jobs extends Component{
     render(){
         return(
             <div>
-                <Header id={this.props.match.params.id}/>
-                <div style={{padding:"5vh",backgroundColor:"#3c424d",minHeight:"100vh"}}>
-                
-                {/* <Link to={`/appliedJob/${this.state.Candid}`}>
-                    <Button className="btn btn-lg" color="warning" style={{marginBottom:"7vh"}}>Applied List</Button>
-                </Link> */}
+                <Header id={this.props.match.params.id} name={this.state.name}/>
+                <div style={{padding:"5vh",backgroundColor:"#b8bdd9",minHeight:"100vh"}}>
+
                 <div class="container">
                 <Row>
                 {this.state.disp}

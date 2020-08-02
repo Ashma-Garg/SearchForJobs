@@ -4,11 +4,6 @@ import axios from 'axios';
 import {Link} from 'react-router-dom';
 import {LocalForm,Control,Errors} from 'react-redux-form';
 
-// const required=(val)=> val&&val.length;
-// const maxlength=(len)=>(val)=> !val || val.length<=len;
-// const minlength=(len) =>(val) => val && val.length>=len;
-// const isNumber=(val)=> !isNaN(val);
-// const validEmail=(val)=>/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val);
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
 const minLength = (len) => (val) =>  val?(val.length >= len):1;
@@ -18,30 +13,12 @@ class ClientLogin extends Component{
     constructor(props){
         super(props);
         this.state={
-            // client:[],
             err:''
         };
         this.handleSubmit=this.handleSubmit.bind(this);
-        // this.deleteclient=this.deleteclient.bind(this);
     }
-    // deleteclient(id){
-    //     axios.get(`http://localhost:2040/client/delete/${id}`)
-    //     .then(response=>{
-    //         this.setState({
-    //             client:response.data.map((client)=>{
-    //                 return(
-    //                 <div>
-    //                     {client.Name}
-    //                     <Button onClick={()=>this.deleteclient(client.Id)}>Delete</Button>
-    //                 </div>
-    //                 );
-    //             })
-    //         });
-    //     })
-    // }
+
     handleSubmit(values){
-        // console.log("Current values are: "+ JSON.stringify(values));
-        // alert("Current values are: "+ JSON.stringify(values));
         const ient={
             name:values.name,
             email:values.email,
@@ -63,30 +40,8 @@ class ClientLogin extends Component{
                 window.location.href='/client';
             }
         });
-        
-        
 
     }
-    // componentDidMount(){
-    //     axios.get(`http://localhost:2040/client`)
-    //     .then(response =>{
-    //         if(response.data.length>0){
-    //             this.setState({
-    //                 client:response.data.map((client)=>{
-    //                     return(
-    //                     <div>
-    //                         {client.Name}
-    //                         <Button onClick={()=>this.deleteclient(client.Id)}>Delete</Button>
-    //                     </div>
-    //                     );
-    //                 })
-    //             });
-                
-    //         }
-    //     })
-    //     .catch((err)=> console.log(err));
-        
-    // }
     render(){
         return(
             <div className="container" style={{height:"400px",marginTop:"200px"}}>
@@ -168,22 +123,6 @@ class ClientLogin extends Component{
                         />
                         </Col>
                     </Row>
-                    {/* <Row className="form-group">
-                        <Label md={{size:2}}htmlFor="id" >Client Id</Label>
-                        <Col>
-                        <Control.text model=".id" name="id" id="id" className="form-control" placeholder="Enter Your Unique Id"
-                        validators={{
-                            required, isNumber
-                        }}
-                        />
-                        <Errors className="text-danger" show="touched" model=".id"
-                        messages={{
-                            required: "This Field is mandatory",
-                            isNumber: "This Should be a Number"
-                        }}
-                        />
-                        </Col>
-                    </Row> */}
                     <Row>
                         <Col md={{size:2,offset:4}}>
                         <Button type="submit">Submit</Button>
@@ -196,9 +135,6 @@ class ClientLogin extends Component{
                 </LocalForm>
                 <br/>
                     <hr/>
-                {/* <p>
-                    {this.state.client}
-                </p> */}
             </div>
         );
     }

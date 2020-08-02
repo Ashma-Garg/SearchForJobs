@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
 import {Label, Col, Row,Button} from 'reactstrap';
-// import 'react-redux';
-// import 'redux';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
 import {LocalForm,Control, Errors} from 'react-redux-form';
@@ -14,14 +12,10 @@ class ClientLogin extends Component{
         super(props);
         this.state={
             err:'',
-            // clientId:''
         };
         this.handleSubmit=this.handleSubmit.bind(this);
     }
     handleSubmit(values){
-        
-        // console.log("Current values are: "+ JSON.stringify(values));
-        // alert("Current values are: "+ JSON.stringify(values));
         const login={
             email:values.email,
             password:values.password
@@ -36,10 +30,7 @@ class ClientLogin extends Component{
             else{
                 this.setState({
                     err:'',
-                    // clientId:response.data.id
                 });
-                // console.log(response.data.id);
-                // onClick={()=>this.props.onClick(this.state.clientId)};
                 window.location.href=`/jobs/${response.data.id}`;
             }
             

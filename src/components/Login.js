@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import {Label, Col, Row,Button} from 'reactstrap';
-// import 'react-redux';
-// import 'redux';
 import {Link} from 'react-router-dom';
 import {LocalForm,Control} from 'react-redux-form';
 class Login extends Component{
@@ -14,9 +12,6 @@ class Login extends Component{
         this.handleSubmit=this.handleSubmit.bind(this);
     }
     handleSubmit(values){
-        // console.log("Current values are: " + JSON.stringify(values));
-        // alert("Current values are: " + JSON.stringify(values));
-
         const candidate={
             email:values.email,
             password:values.password
