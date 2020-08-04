@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
 import axios from 'axios';
-import {Card,CardTitle,CardBody,Col,Row} from 'reactstrap';
+import {Card,CardTitle,CardBody,Col,Row,Button} from 'reactstrap';
 import Header from './HeaderCandidate';
 
 class AppliedJob extends Component{
@@ -11,9 +11,14 @@ class AppliedJob extends Component{
             Disp:'',
             name:''
         };
+        this.deleteApplied=this.deleteApplied.bind(this);
     }
-    apihandler(){
-
+    deleteApplied(jobId){
+        // console.log(jobId);
+        axios.post(`http://localhost:2040/candidate/deleteapplied/${this.state.CandId}`,{jobId})
+        .then(res=>{
+            window.location.href=`/appliedJob/${this.state.CandId}`
+        });
     }
     componentDidMount(){
         axios.get(`http://localhost:2040/candidate/data/${this.props.match.params.id}`)
@@ -57,6 +62,11 @@ class AppliedJob extends Component{
                                     <p className="text-secondary">Applications Received: {jobs.CandidateId.length}</p>
                                     </Col>
                                    
+                                </Row>
+                                <Row>
+                                    <Col>
+                                        <Button onClick={()=>this.deleteApplied(jobs._id)}>Delete</Button>
+                                    </Col>
                                 </Row>
                                 <Row>
                                     <Col>

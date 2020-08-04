@@ -2,6 +2,8 @@ var router=require('express').Router(),
 bcrypt=require('bcryptjs');
 var Candidate=require('../models/Candidate');
 const Client = require('../models/Client');
+var Jobs=require('../models/Jobs')
+// const { default: Jobs } = require('../../src/components/Jobs');
 
 
 // Candidate.remove({},function(err){
@@ -105,6 +107,16 @@ router.post('/addAppliedJob/:candid',function(req,res){
             }
     },1000);    
 
+})
+router.post('/deleteapplied/:id',function(req,res){
+    console.log(req.body.jobId);
+    Jobs.findByIdAndUpdate(req.body.jobId,{$pullAll:{CandidateId:[req.params.id]}},function(err,data){
+        if(err) console.log(err);
+    })
+    Candidate.findByIdAndUpdate(req.params.id,{$pullAll:{Accepted:[req.body.jobId]}},function(err,data){
+            res.json(data);
+    })
+    
 })
 
 module.exports=router;
