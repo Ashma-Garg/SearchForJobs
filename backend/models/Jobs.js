@@ -5,9 +5,16 @@ var JobsSchema=mongoose.Schema({
         type:String,
         required:true
     },
-    CandidateId:[{
+    CandidateId:[
+        {candid:
+        {
         type:String
-    }],
+        },
+        isAccepted:{
+            type:Boolean
+        }
+        }
+    ],
 
     JoiningDate:{
         required:true,

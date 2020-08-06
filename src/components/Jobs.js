@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import axios from 'axios';
 import 'font-awesome/css/font-awesome.css';
-import {Card,CardTitle,CardBody,Button,Col,Row, ModalHeader, ModalBody,Label,Modal} from 'reactstrap';
+import {Card,CardTitle,CardBody,CardFooter,Button,Col,Row, ModalHeader, ModalBody,Label,Modal} from 'reactstrap';
 import {withRouter} from 'react-router-dom';
 import DatePicker from "react-datepicker";
 import Header from './HeaderClient';
@@ -37,6 +37,7 @@ class Jobs extends Component{
         this.handleSalary=this.handleSalary.bind(this);
         this.handleDesc=this.handleDesc.bind(this);
         this.handleDate=this.handleDate.bind(this);
+        this.displayCandidates=this.displayCandidates.bind(this);
 
     }
     handleSubmitEdit(values){
@@ -148,6 +149,9 @@ class Jobs extends Component{
             }
         })
     }
+    displayCandidates(jobId){
+        window.location.href=`/appliedforjob/${jobId}`;
+    }
     componentDidMount(){
         this.setState({
             id:this.props.match.params.id
@@ -171,7 +175,7 @@ class Jobs extends Component{
                         <Col className="col-12 col-md-10 col-lg-6 mb-5">
                         <Card className="shadow-lg p-3 mb-5 bg-white rounded">
                             <CardTitle style={{backgroundColor:"#8feb34",padding:"10px",color:"#eb4f34"}}><h3 style={{fontWeight:"bolder"}}>{jobs.Company}</h3></CardTitle>
-                            <CardBody>
+                            <CardBody onClick={()=>this.displayCandidates(jobs._id)}>
                                 <Row>
                                     <Col className="col-sm-4"><p style={{fontWeight:"bolder"}}>Designation:</p> </Col>
                                     <Col><p>{jobs.Designation}</p> </Col>
@@ -192,6 +196,8 @@ class Jobs extends Component{
                                     <Col className="col-sm-4"><p style={{fontWeight:"bolder"}}>Location: </p> </Col>
                                     <Col><p> {jobs.Location}</p> </Col>
                                 </Row>
+                                </CardBody>
+                                <CardFooter>
                                 <Row>
                                     <Col>
                                         <Button className="col-sm-4 col-md-4" color="danger" onClick={()=>this.deleteJob(jobs._id)}>Delete</Button>
@@ -214,7 +220,7 @@ class Jobs extends Component{
                                    
                                 </Row>
                                 
-                            </CardBody>
+                                </CardFooter>
                         </Card>
                         </Col>
                         );

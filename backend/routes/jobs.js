@@ -62,7 +62,7 @@ router.post('/addAppliedJob/:candid',function(req,res){
     setTimeout(()=>{
         // console.log(length);
         if(length<5){
-            Jobs.findByIdAndUpdate(req.body.JobId,{$push:{CandidateId:req.params.candid}},function(err,data){
+            Jobs.findByIdAndUpdate(req.body.JobId,{$push:{CandidateId:{candid:req.params.candid,isAccepted:false}}},function(err,data){
                 if(err) console.log(err);
                 res.json(data);
             })
@@ -77,8 +77,14 @@ router.post('/addAppliedJob/:candid',function(req,res){
     //     res.json(data);
     // })
 })
+// router.get('/deletecand',function(req,res){
+//     Jobs.findByIdAndUpdate("5f241e9649040d2240b61a03",{$pullAll:{CandidateId:["5f23f03a49788d36ecd99554"]}},function(err,data){
+//         if(err) console.log(err);
+//         res.json(data);
+//     })
+// })
 router.get('/appliedList/:candid',function(req,res){
-    Jobs.find({CandidateId:{$elemMatch:{$eq:req.params.candid}}},function(err,data){
+    Jobs.find({CandidateId:{$elemMatch:{candid:{$eq:req.params.candid}}}},function(err,data){
         if(err) console.log(err);
         else res.json(data);
     })
@@ -135,4 +141,21 @@ router.get('/delete/:id',function(req,res){
 
 })
 
+router.get('/application/:id',function(req,res){
+    Jobs.findById(req.params.id,function(err,data){
+        if(err) console.log(err);
+        res.json(data);
+    })
+})
+router.post("/setrue/:jobId",function(req,res){
+    Jobs.findById(req.params.jobId,function(err,data){
+        if(err) console.log(err);
+        data.findOne({Candidate:{candid:req.body.candId}},function(err,data){
+            if(err) console.log(err);
+            console.log(data);
+        })
+        res.json(data);
+        // console.log(data);
+    })
+})
 module.exports=router;

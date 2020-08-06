@@ -108,9 +108,14 @@ router.post('/addAppliedJob/:candid',function(req,res){
     },1000);    
 
 })
+// router.get('/deletejob',function(req,res){
+//     Candidate.findByIdAndUpdate("5f23f03a49788d36ecd99554",{$pullAll:{Accepted:["5f216026ee531039a8d4691b","5f241e9649040d2240b61a03","5f241bcc49040d2240b619ff"]}},function(err,data){
+//         res.json(data);
+// })
+// })
 router.post('/deleteapplied/:id',function(req,res){
     console.log(req.body.jobId);
-    Jobs.findByIdAndUpdate(req.body.jobId,{$pullAll:{CandidateId:[req.params.id]}},function(err,data){
+    Jobs.findByIdAndUpdate(req.body.jobId,{$pullAll:{CandidateId:{candid:[req.params.id]}}},function(err,data){
         if(err) console.log(err);
     })
     Candidate.findByIdAndUpdate(req.params.id,{$pullAll:{Accepted:[req.body.jobId]}},function(err,data){

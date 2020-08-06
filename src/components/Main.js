@@ -7,6 +7,7 @@ import Client from './ClientLogin';
 import Jobs from './Jobs';
 import CandJob from './CandJob';
 import AppliedJob from './AppliedJob';
+import Application from './Application'
 
 class Main extends Component{
 
@@ -21,6 +22,7 @@ class Main extends Component{
                     <Route exact path="/jobs/:id" component={Jobs}></Route>
                     <Route exact path="/candidateJob/:id" component={CandJob}></Route>
                     <Route exact path="/appliedJob/:id" component={AppliedJob}></Route>
+                    <Route exact path='/appliedforjob/:id' component={Application}></Route>
                     <Redirect to='/'></Redirect>
                 </Switch>
             </div>

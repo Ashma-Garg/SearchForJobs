@@ -65,7 +65,7 @@ class Jobs extends Component{
                         if(jobs.CandidateId.length>0){
                             this.setState({
                                 button:jobs.CandidateId.map((ele)=>{
-                                    if(ele===this.state.Candid){
+                                    if(ele.candid===this.state.Candid){
                                         this.setState({
                                             disable:1
                                         });
