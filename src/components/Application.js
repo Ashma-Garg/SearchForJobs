@@ -8,30 +8,38 @@ class Application extends Component{
         this.state={
             jobId:this.props.match.params.id,
             disp:[],
-            display:[]
+            display:[],
+            isAccepted:'',
+            Company:''
         };
         this.permission=this.permission.bind(this);
     }
     permission(candId){
         alert('Accepted');
-        axios.post(`http://localhost:2040/jobs/setrue/${this.state.jobId}`,candId)
+        axios.post(`http://localhost:2040/jobs/setrue/${this.state.jobId}`,{candId})
         .then(res=>{console.log(res.data)});
-        // document.getElementById(candId).disabled='true';
+        document.getElementById(candId).disabled='true';
+        console.log("Clicked");
 
     }
     componentDidMount(){
         axios.get(`http://localhost:2040/jobs/application/${this.state.jobId}`)
         .then(res=>{
             this.setState({
+            Company:res.data.Company,
             disp:
                 res.data.CandidateId.map((cand)=>{
                     return cand.candid;
-                })
+                }),
+            isAccepted: res.data.CandidateId.map((cand)=>{
+                return cand.isAccepted;
+            })
             })
 
 
         })
         var ex;
+        var i=-1;
         setTimeout(()=>{
         axios.all(this.state.disp.map(l => axios.get(`http://localhost:2040/candidate/data/${l}`)))
         .then(axios.spread(function (...res) {
@@ -45,17 +53,16 @@ class Application extends Component{
         setTimeout(()=>{
             this.setState({
                 display:ex.map((ex)=>{
+                    i++;
                     return(
                         <tr className="col-12">
                         <td>
                             <p>{ex.Name}</p>
-                            
                         </td>
                         <td>
-                        <Button id={ex._id} onClick={()=>this.permission(ex._id)} color="success">Accept</Button>
+                        <button className={this.state.isAccepted[i]==='true'?"btn btn-success disabled":"btn btn-success"} id={ex._id} disabled={this.state.isAccepted[i]==='true'?true:false} onClick={()=>this.permission(ex._id)}>{this.state.isAccepted[i]==='true'?"Accepted":"Accept"}</button>
                         </td>
                         </tr>
-
                 )
                 })
             })
@@ -67,6 +74,8 @@ class Application extends Component{
     render(){
         return(
             <div className="container">
+                
+                <h3 style={{textDecoration:"underline",marginTop:"3%"}}>{this.state.Company}</h3>
                 <Table dark borderd hover responsive>
                     <tbody>
                         {this.state.display}

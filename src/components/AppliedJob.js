@@ -59,6 +59,23 @@ class AppliedJob extends Component{
                                 </Row>
                                 <Row>
                                     <Col>
+                                    {jobs.CandidateId.map((cid)=>{
+                                        if(cid.candid===this.props.match.params.id){
+                                            if(cid.isAccepted==='true'){
+                                                return (<h4 style={{fontWeight:"bolder",color:"green",backgroundColor:"yellow",padding:"2%"}}>You have been selected!</h4>);
+                                            }
+                                            else{
+                                                return (<p></p>);
+                                            }
+                                        }
+                                        else{
+                                            return (<p></p>);
+                                        }
+                                    })}
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col>
                                     <p className="text-secondary">Applications Received: {jobs.CandidateId.length}</p>
                                     </Col>
                                    

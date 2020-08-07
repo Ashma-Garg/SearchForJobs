@@ -11,7 +11,7 @@ var JobsSchema=mongoose.Schema({
         type:String
         },
         isAccepted:{
-            type:Boolean
+            type:String
         }
         }
     ],

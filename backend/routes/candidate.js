@@ -115,7 +115,7 @@ router.post('/addAppliedJob/:candid',function(req,res){
 // })
 router.post('/deleteapplied/:id',function(req,res){
     console.log(req.body.jobId);
-    Jobs.findByIdAndUpdate(req.body.jobId,{$pullAll:{CandidateId:{candid:[req.params.id]}}},function(err,data){
+    Jobs.findByIdAndUpdate(req.body.jobId,{CandidateId:{$pullAll:{candid:[req.params.id]}}},function(err,data){
         if(err) console.log(err);
     })
     Candidate.findByIdAndUpdate(req.params.id,{$pullAll:{Accepted:[req.body.jobId]}},function(err,data){

@@ -148,14 +148,29 @@ router.get('/application/:id',function(req,res){
     })
 })
 router.post("/setrue/:jobId",function(req,res){
-    Jobs.findById(req.params.jobId,function(err,data){
-        if(err) console.log(err);
-        data.findOne({Candidate:{candid:req.body.candId}},function(err,data){
+    Jobs.find({},function(err,data){
+        {
             if(err) console.log(err);
-            console.log(data);
-        })
-        res.json(data);
-        // console.log(data);
+            if(data){
+                data.map((cId,cIdIndex)=>{
+                     if(cId._id==req.params.jobId){
+                        cId.CandidateId.map((canpas,canpasIndex)=>{
+                        if(canpas.candid===req.body.candId){
+                            let toset="CandidateId."+canpasIndex+".isAccepted";
+                            console.log(toset);
+                            Jobs.update({_id:req.params.jobId,CandidateId:{$elemMatch:{candid:{$eq:req.body.candId}}}},{$set:{[`${toset}`]:"true"}},function(err,d){
+                                if(err) console.log(err);
+                                console.log(d);
+                            })
+                        }
+                    })
+                    }
+                })
+            }
+        }
     })
+
+
+    
 })
 module.exports=router;

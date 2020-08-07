@@ -107,8 +107,25 @@ class Jobs extends Component{
                                 </Row>
                                 <Row>
                                     <Col>
+                                    {jobs.CandidateId.map((cid)=>{
+                                        if(cid.candid===this.props.match.params.id){
+                                            if(cid.isAccepted==='true'){
+                                                return (<h4 style={{fontWeight:"bolder",color:"green",backgroundColor:"yellow",padding:"2%"}}>You have been selected!</h4>);
+                                            }
+                                            else{
+                                                return (<p></p>);
+                                            }
+                                        }
+                                        else{
+                                            return (<p></p>);
+                                        }
+                                    })}
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col>
                                     <p></p>
-                                        <Button id={jobs._id} onClick={()=>this.AddToApplied(jobs._id)} className={this.state.disable?'disabled col-md-6':new Date(jobs.JoiningDate)<new Date()?'disabled col-md-6':"btn-success col-md-6"}>{this.state.disable?"Applied":"Apply"}</Button>
+                                        <button id={jobs._id} onClick={()=>this.AddToApplied(jobs._id)} className={this.state.disable?'btn btn-secondary disabled col-md-6':new Date(jobs.JoiningDate)<new Date()?'btn btn-secondary disabled col-md-6':"btn btn-success col-md-6"} disabled={this.state.disable?this.state.disable:new Date(jobs.JoiningDate)<new Date()?true:false}>{this.state.disable?"Applied":"Apply"}</button>
                                     </Col>
                                 </Row>
                                 <Row>
