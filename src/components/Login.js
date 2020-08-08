@@ -36,7 +36,14 @@ class Login extends Component{
     render(){
         return(
             <div className="container" style={{height:"400px",marginTop:"200px"}}>
-                {this.state.err}
+                {this.state.err?
+                    <div class="alert col-md-8 offset-md-2 alert-danger alert-dismissible fade show" role="alert">
+                    <strong> {this.state.err}</strong>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>:""
+                }
                 <h3 style={{padding:"20px"}}>Login As Candidate...</h3>
                 <LocalForm className="col-md-8 offset-md-2 shadow-lg p-3 mb-5 bg-white rounded" onSubmit={this.handleSubmit}>
                     <Row className="form-group">

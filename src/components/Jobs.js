@@ -174,7 +174,7 @@ class Jobs extends Component{
                         return(
                         <Col className="col-12 col-md-10 col-lg-6 mb-5">
                         <Card className="shadow-lg p-3 mb-5 bg-white rounded">
-                            <CardTitle style={{backgroundColor:"#8feb34",padding:"10px",color:"#eb4f34"}}><h3 style={{fontWeight:"bolder"}}>{jobs.Company}</h3></CardTitle>
+                            <CardTitle style={{backgroundColor:"#8feb34",padding:"10px",color:"#eb4f34"}}><h3 style={{fontFamily:"Luckiest Guy",letterSpacing:"2px"}}>{jobs.Company}</h3></CardTitle>
                             <CardBody onClick={()=>this.displayCandidates(jobs._id)}>
                                 <Row>
                                     <Col className="col-sm-4"><p style={{fontWeight:"bolder"}}>Designation:</p> </Col>
@@ -234,30 +234,24 @@ class Jobs extends Component{
     }
     render(){
         return(
-            <div>
+            <div style={{backgroundColor:"#bed1cb",minHeight:"100vh"}}> 
+                <div style={{position:"sticky",top:"0",zIndex:"1"}}>
                 <Header id={this.state.id} name={this.state.name}/>
-                <div style={{padding:"5vh",backgroundColor:"#bed1cb",minHeight:"100vh"}}>
-                
+                </div>
+                <div style={{padding:"5vh"}}>
+               <div className="container">
                 <Row>
-                    <Col className="col-12 col-md-8"></Col>
-                    <Col>
-                    <Button onClick={this.toggleModal} className="col-12 col-md-4" color="primary" style={{marginBottom:"7vh"}}>Add Jobs</Button>
-                    </Col>
-                </Row>
-                <div className="container">
-                <Row>
-                {this.state.disp}
+                {this.state.disp}                
                 </Row>
                 </div>
+                <Button title="Add New Job" onClick={this.toggleModal} color="primary" style={{bottom:"30px",right:"30px",position:"fixed"}}><img alt="Add New Job" src="https://img.icons8.com/ios-filled/35/000000/plus.png"/></Button>
                 <Modal style={{minWidth:"60%"}} isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
                     <ModalHeader 
                     style={{backgroundColor:"#3464eb",color:"white"}}
                      toggle={this.toggleModal}>
                         <h3>Add New Job</h3>
                     </ModalHeader>
-                    <ModalBody 
-                    // style={{backgroundColor:"#cbcdd4"}}
-                    >
+                    <ModalBody>
                     <div class="container">
                         <LocalForm onSubmit={this.handleSubmit} className="col-md-10">
                             <Row className="form-group" md={12}>
@@ -319,9 +313,7 @@ class Jobs extends Component{
                         <ModalHeader style={{backgroundColor:"#3464eb",color:"white"}} toggle={this.toggleModalEdit}>
                             <h3>Edit Job</h3>
                         </ModalHeader>
-                        <ModalBody 
-                        // style={{backgroundColor:"#cbcdd4"}}
-                        >
+                        <ModalBody>
                         <div class="container">
                             <LocalForm onSubmit={this.handleSubmitEdit} className="col-md-10">
                                 <Row className="form-group" md={12}>

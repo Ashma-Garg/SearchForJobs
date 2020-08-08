@@ -45,7 +45,14 @@ class ClientLogin extends Component{
     render(){
         return(
             <div className="container" style={{height:"400px",marginTop:"200px"}}>
-                {this.state.err}
+                {this.state.err?
+                    <div class="alert col-md-8 offset-md-2 alert-danger alert-dismissible fade show" role="alert">
+                    <strong> {this.state.err}</strong>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>:""
+                }
                 <h3 style={{padding:"20px"}}>Register As Client...</h3>
                 <LocalForm className="col-md-8 offset-md-2  shadow-lg p-3 mb-5 bg-white rounded" onSubmit={this.handleSubmit}>
                     <Row className="form-group">
@@ -111,7 +118,7 @@ class ClientLogin extends Component{
                         <Col>
                         <Control.text model=".company" name="company" id="company" className="form-control" placeholder="Enter Compnay's Name"
                         validators={{
-                            required, maxLength:maxLength(30), minLength:minLength(8)
+                            required, maxLength:maxLength(30), minLength:minLength(2)
                         }}
                         />
                         <Errors className="text-danger" show="touched" model=".company"

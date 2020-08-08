@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import { Table, Button } from 'reactstrap';
+import { Table } from 'reactstrap';
 // import { Table,Col, Row } from 'reactstrap';
 class Application extends Component{
     constructor(props){
@@ -57,7 +57,7 @@ class Application extends Component{
                     return(
                         <tr className="col-12">
                         <td>
-                            <p>{ex.Name}</p>
+                            <p style={{fontFamily:"Patua One",fontSize:"24px"}}>{ex.Name}</p>
                         </td>
                         <td>
                         <button className={this.state.isAccepted[i]==='true'?"btn btn-success disabled":"btn btn-success"} id={ex._id} disabled={this.state.isAccepted[i]==='true'?true:false} onClick={()=>this.permission(ex._id)}>{this.state.isAccepted[i]==='true'?"Accepted":"Accept"}</button>
@@ -75,7 +75,7 @@ class Application extends Component{
         return(
             <div className="container">
                 
-                <h3 style={{textDecoration:"underline",marginTop:"3%"}}>{this.state.Company}</h3>
+                <h2 style={{textDecoration:"underline",marginTop:"3%",fontFamily:"Lobster"}}>{this.state.Company}</h2>
                 <Table dark borderd hover responsive>
                     <tbody>
                         {this.state.display}

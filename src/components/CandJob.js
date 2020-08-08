@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
 import axios from 'axios';
-import {Card,CardTitle,CardBody,Button,Col,Row} from 'reactstrap';
+import {Card,CardTitle,CardBody,Col,Row} from 'reactstrap';
 import {withRouter} from 'react-router-dom';
 import Header from './HeaderCandidate';
 class Jobs extends Component{
@@ -83,7 +83,7 @@ class Jobs extends Component{
                         return(
                         <Col className="col-12 col-md-10 col-lg-6 mb-5">
                         <Card className="shadow-lg p-3 mb-5 bg-white rounded">
-                            <CardTitle style={{backgroundColor:"#c8e6e5",padding:"10px",color:"#eb4f34"}}><h3 style={{fontWeight:"bolder"}}>{jobs.Company}</h3></CardTitle>
+                            <CardTitle style={{backgroundColor:"#c8e6e5",padding:"10px",color:"#eb4f34"}}><h3 style={{fontFamily:"Luckiest Guy",letterSpacing:"2px"}}>{jobs.Company}</h3></CardTitle>
                             <CardBody>
                                 <Row>
                                     <Col className="col-sm-4"><p style={{fontWeight:"bolder"}}>Designation:</p> </Col>
@@ -154,7 +154,9 @@ class Jobs extends Component{
     render(){
         return(
             <div>
+                <div style={{position:"sticky",top:"0",zIndex:"1"}}>
                 <Header id={this.props.match.params.id} name={this.state.name}/>
+                </div>
                 <div style={{padding:"5vh",backgroundColor:"#b8bdd9",minHeight:"100vh"}}>
 
                 <div class="container">
