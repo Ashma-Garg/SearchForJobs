@@ -31,6 +31,7 @@ class ClientLogin extends Component{
                 this.setState({
                     err:'',
                 });
+                localStorage.setItem("tokenClient","hjhja");
                 window.location.href=`/jobs/${response.data.id}`;
             }
             

@@ -2,14 +2,21 @@ import React,{Component} from 'react';
 import axios from 'axios';
 import {Card,CardTitle,CardBody,Col,Row,Button} from 'reactstrap';
 import Header from './HeaderCandidate';
+import { Redirect } from 'react-router-dom';
 
 class AppliedJob extends Component{
     constructor(props){
         super(props);
+        const token=localStorage.getItem("token");
+        let loggedIn=true;
+        if(token==null){
+            loggedIn=false;
+        }
         this.state={
             CandId:this.props.match.params.id,
             Disp:'',
-            name:''
+            name:'',
+            loggedIn
         };
         this.deleteApplied=this.deleteApplied.bind(this);
     }
@@ -105,6 +112,9 @@ class AppliedJob extends Component{
         })
     }
     render(){
+        if(this.state.loggedIn===false){
+            return <Redirect to="/"/>
+        }
         return(
             <div>
                 <div style={{position:"sticky",top:"0",zIndex:"1"}}>

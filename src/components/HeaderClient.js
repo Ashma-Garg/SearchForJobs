@@ -21,7 +21,10 @@ class Header extends Component {
         });
       }
 
-
+      logout(){
+          localStorage.removeItem("tokenClient");
+          window.location.href='/client';
+      }
     render() {
         return(
             <div>
@@ -36,7 +39,10 @@ class Header extends Component {
                             </Nav>
                             <Nav className="ml-auto" navbar>
                                 <NavItem>
-                                    <Button><span className="fa fa-user fa-lg pr-3"></span>{this.props.name}</Button>
+                                    <Button style={{margin:"5px"}} ><span className="fa fa-user fa-lg pr-3"></span>{this.props.name}</Button>
+                                </NavItem>
+                                <NavItem>
+                                    <Button style={{margin:"5px"}} onClick={()=>this.logout()}><span className="fa fa-sign-out fa-lg pr-3"></span>Logout</Button>
                                 </NavItem>
                             </Nav>
                         </Collapse>

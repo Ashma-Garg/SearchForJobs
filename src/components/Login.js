@@ -11,6 +11,15 @@ class Login extends Component{
         };
         this.handleSubmit=this.handleSubmit.bind(this);
     }
+    // componentDidMount(){
+    //     var keys=Object.keys(localStorage),
+    //     i=keys.length;
+    //     console.log(i);
+    //     while(i--){
+    //         console.log(localStorage.getItem(keys[i]))
+    //         localStorage.removeItem(keys[i])
+    //     }
+    // }
     handleSubmit(values){
         const candidate={
             email:values.email,
@@ -27,6 +36,8 @@ class Login extends Component{
                 this.setState({
                     err:''
                 })
+               
+                localStorage.setItem("token","bvfbda");
                 window.location.href=`/candidateJob/${res.data.id}`;
             }
         });
@@ -34,8 +45,11 @@ class Login extends Component{
 
     }
     render(){
+        
         return(
+            
             <div className="container" style={{height:"400px",marginTop:"200px"}}>
+                
                 {this.state.err?
                     <div class="alert col-md-8 offset-md-2 alert-danger alert-dismissible fade show" role="alert">
                     <strong> {this.state.err}</strong>

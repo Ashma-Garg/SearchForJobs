@@ -1,11 +1,16 @@
 import React,{Component} from 'react';
 import axios from 'axios';
 import {Card,CardTitle,CardBody,Col,Row} from 'reactstrap';
-import {withRouter} from 'react-router-dom';
+import {withRouter, Redirect} from 'react-router-dom';
 import Header from './HeaderCandidate';
 class Jobs extends Component{
     constructor(props){
         super(props);
+        const token=localStorage.getItem("token");
+        let loggedIn=true;
+        if(token==null){
+            loggedIn=false
+        }
         this.state={
             Candid:"",
             name:'',
@@ -13,7 +18,8 @@ class Jobs extends Component{
             disable:0,
             button:0,
             err:'',
-            Applied:''
+            Applied:'',
+            loggedIn
         };
     }
     AddToApplied(JobId){
@@ -49,7 +55,8 @@ class Jobs extends Component{
         axios.get(`http://localhost:2040/candidate/data/${this.props.match.params.id}`)
         .then(res=>{
             this.setState({
-                name:res.data.Name
+                name:res.data.Name,
+                email:res.data.email
             });
         })
         setTimeout(()=>{
@@ -152,6 +159,9 @@ class Jobs extends Component{
         
     }
     render(){
+        if(this.state.loggedIn===false){
+            return <Redirect to='/' />
+        }
         return(
             <div>
                 <div style={{position:"sticky",top:"0",zIndex:"1"}}>

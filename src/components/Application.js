@@ -1,16 +1,23 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import { Table } from 'reactstrap';
+import {Redirect} from 'react-router-dom';
 // import { Table,Col, Row } from 'reactstrap';
 class Application extends Component{
     constructor(props){
         super(props);
+        const token=localStorage.getItem("tokenClient");
+        let loggedIn=true;
+        if(token==null){
+            loggedIn=false;
+        }
         this.state={
             jobId:this.props.match.params.id,
             disp:[],
             display:[],
             isAccepted:'',
-            Company:''
+            Company:'',
+            loggedIn
         };
         this.permission=this.permission.bind(this);
     }
@@ -72,6 +79,9 @@ class Application extends Component{
 
     }
     render(){
+        if(this.state.loggedIn===false){
+            return <Redirect to="/client"/>
+        }
         return(
             <div className="container">
                 

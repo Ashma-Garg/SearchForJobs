@@ -2,7 +2,7 @@ import React,{Component} from 'react';
 import axios from 'axios';
 import 'font-awesome/css/font-awesome.css';
 import {Card,CardTitle,CardBody,CardFooter,Button,Col,Row, ModalHeader, ModalBody,Label,Modal} from 'reactstrap';
-import {withRouter} from 'react-router-dom';
+import {withRouter, Redirect} from 'react-router-dom';
 import DatePicker from "react-datepicker";
 import Header from './HeaderClient';
 import "react-datepicker/dist/react-datepicker.css"; 
@@ -10,6 +10,14 @@ import {LocalForm,Control} from 'react-redux-form';
 class Jobs extends Component{
     constructor(props){
         super(props);
+        const token=localStorage.getItem("tokenClient");
+        let loggedIn=true;
+        if(token==null){
+            loggedIn=false
+        }
+        else{
+            loggedIn=true;
+        }
         this.state={
             id:'',
             disp:'',
@@ -23,7 +31,8 @@ class Jobs extends Component{
             Location:'',
             Desc:'',
             JobId:'',
-            name:''
+            name:'',
+            loggedIn
         };
         this.deleteJob=this.deleteJob.bind(this);
         this.editJob=this.editJob.bind(this);
@@ -233,6 +242,9 @@ class Jobs extends Component{
         
     }
     render(){
+        if(this.state.loggedIn===false){
+            return <Redirect to='/client' />
+        }
         return(
             <div style={{backgroundColor:"#bed1cb",minHeight:"100vh"}}> 
                 <div style={{position:"sticky",top:"0",zIndex:"1"}}>
