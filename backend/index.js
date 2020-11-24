@@ -44,12 +44,6 @@ app.use('/client',client);
 app.use('/jobs',job);
 app.use('/candidate',candidate);
 
-// if(process.env.NODE_ENV=="production"){
-//     app.use(expres.static('jobs/buld'));
-//     app.get("*",(req,res)=>{
-//         res.sendFile(path.resolve(__dirname,'jobs','build','index.html'));
-//     })
-// }
 app.listen(process.env.PORT || 2040, process.env.ID,function(req,res){
     console.log("Server Started....");
 })
