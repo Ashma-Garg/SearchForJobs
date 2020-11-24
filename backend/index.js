@@ -25,7 +25,7 @@ app.set('views',path.join(__dirname,'views'));
 app.use(bodyParser.json());
 app.use(methodOverride('_method'));
 app.use(cors());
-var url="mongodb://localhost/jobs";
+var url="mongodb+srv://ashma_garg:35J7qorOBKeAWRZf@cluster0.kh0sh.mongodb.net/<dbname>?retryWrites=true&w=majority" || "mongodb://localhost/jobs";
 
 mongoose.connect(url,{useUnifiedTopology: true,useNewUrlParser:true,useFindAndModify: false}).then(()=>{
     console.log("DataBase Connected");
@@ -34,9 +34,17 @@ mongoose.connect(url,{useUnifiedTopology: true,useNewUrlParser:true,useFindAndMo
 var client=require('./routes/client');
 var job=require('./routes/jobs');
 var candidate=require('./routes/candidate');
+const { resolve } = require('path');
 app.use('/client',client);
 app.use('/jobs',job);
 app.use('/candidate',candidate);
+
+// if(process.env.NODE_ENV=="production"){
+//     app.use(expres.static('jobs/buld'));
+//     app.get("*",(req,res)=>{
+//         res.sendFile(path.resolve(__dirname,'jobs','build','index.html'));
+//     })
+// }
 app.listen(process.env.PORT || 2040, process.env.ID,function(req,res){
     console.log("Server Started....");
 })
