@@ -25,7 +25,7 @@ app.set('views',path.join(__dirname,'views'));
 app.use(bodyParser.json());
 app.use(methodOverride('_method'));
 app.use(cors());
-var url="mongodb+srv://ashma_garg:35J7qorOBKeAWRZf@cluster0.kh0sh.mongodb.net/database?retryWrites=true&w=majority";
+var url="mongodb://localhost/jobs";
 
 mongoose.connect(url,{useUnifiedTopology: true,useNewUrlParser:true,useFindAndModify: false}).then(()=>{
     console.log("DataBase Connected");
@@ -34,11 +34,6 @@ mongoose.connect(url,{useUnifiedTopology: true,useNewUrlParser:true,useFindAndMo
 var client=require('./routes/client');
 var job=require('./routes/jobs');
 var candidate=require('./routes/candidate');
-const { resolve } = require('path');
-
-app.get('/',(req,res)=>{
-    res.send("Hey There");
-})
 
 app.use('/client',client);
 app.use('/jobs',job);
