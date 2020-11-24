@@ -35,6 +35,11 @@ var client=require('./routes/client');
 var job=require('./routes/jobs');
 var candidate=require('./routes/candidate');
 const { resolve } = require('path');
+
+app.get('/',(req,res)=>{
+    res.send("Hey There");
+})
+
 app.use('/client',client);
 app.use('/jobs',job);
 app.use('/candidate',candidate);
