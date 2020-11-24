@@ -25,7 +25,7 @@ app.set('views',path.join(__dirname,'views'));
 app.use(bodyParser.json());
 app.use(methodOverride('_method'));
 app.use(cors());
-var url="mongodb+srv://ashma_garg:35J7qorOBKeAWRZf@cluster0.kh0sh.mongodb.net/database?retryWrites=true&w=majority" || "mongodb://localhost/jobs";
+var url="mongodb+srv://ashma_garg:35J7qorOBKeAWRZf@cluster0.kh0sh.mongodb.net/database?retryWrites=true&w=majority";
 
 mongoose.connect(url,{useUnifiedTopology: true,useNewUrlParser:true,useFindAndModify: false}).then(()=>{
     console.log("DataBase Connected");
