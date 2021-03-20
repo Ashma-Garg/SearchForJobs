@@ -12,8 +12,20 @@ class ClientLogin extends Component{
         super(props);
         this.state={
             err:'',
+            email:null
         };
         this.handleSubmit=this.handleSubmit.bind(this);
+        this.storeEmail=this.storeEmail.bind(this);
+        this.setCategory=this.setCategory.bind(this);
+    }
+    setCategory(){
+        if(!this.state.email) alert("Please enter Email first.")
+        this.props.callBack('client');
+    }
+    storeEmail(event){
+        this.setState({
+            email:event.target.value
+        })
     }
     handleSubmit(values){
         const login={
@@ -54,7 +66,7 @@ class ClientLogin extends Component{
                     <Row className="form-group">
                         <Label sm={{size:2}} htmlFor="email">Email</Label>
                         <Col>
-                        <Control.text model=".email" id="email" name="email" className="form-control" placeholder="Email"
+                        <Control.text onChange={this.storeEmail} model=".email" id="email" name="email" className="form-control" placeholder="Email"
                         validators={{
                             required,validEmail
                         }}
@@ -86,8 +98,17 @@ class ClientLogin extends Component{
                         <Col md={{size:2,offset:4}}>
                         <Button type="submit">Submit</Button>
                         </Col>
+                    </Row>
+                    <Row>
                         <Col>
-                        <Link to="/clientregister" >Not Registered?</Link>
+                            <Link to="/clientregister" >Not Registered?</Link>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col md={{offset:3}}>
+                            <Link to={this.state.email?`/reset/${this.state.email}`:`/client`} onClick={this.setCategory}>
+                                Reset Password if forgotten!
+                            </Link>
                         </Col>
                     </Row>
                 </LocalForm>

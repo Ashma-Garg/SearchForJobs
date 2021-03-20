@@ -58,6 +58,9 @@ router.post('/',function(req,res){
 })
 router.post('/login',function(req,res){
     var err;
+    Candidate.find({},function(err,data){
+        console.log(data)
+    });
     Candidate.findOne({Email:req.body.email},function(error,data){
         if(error) console.log(error);
         if(!data){
@@ -83,6 +86,34 @@ router.post('/login',function(req,res){
     })
 });
 
+router.post('/reset',function(req,res){
+    var error;
+    var passHash;
+    Candidate.findOne({Email:req.body.resetCand.email},function(err,data){
+        if(err) console.log(err)
+        if(!data){
+            error="Email is not registered! Please Register first.";
+            return res.json({error:error,status:400})
+        }
+        if(typeof error==='undefined'){
+            bcrypt.genSalt(10,(err,salt)=>{
+                if(err) console.log(err);
+                bcrypt.hash(req.body.resetCand.reset,salt,(err,hash)=>{
+                    if(err) console.log(err);
+                    passHash=hash;
+                    Candidate.findOneAndUpdate({Email:req.body.resetCand.email},{Password:passHash},function(err,data){
+                        if(err) console.log(err)
+                        else{
+                            return res.json({error:'Successfully Updated',status:200});
+                        }
+                    })
+                })
+            })
+            
+        }
+    })
+
+})
 router.post('/addAppliedJob/:candid',function(req,res){
     var candId=req.params.candid;
     // Candidate.findByIdAndUpdate(candId,{$pullAll:{Accepted:["899"]}},function(err,data){

@@ -7,9 +7,12 @@ class Login extends Component{
     constructor(props){
         super(props);
         this.state={
-            err:''
+            err:'',
+            email:null
         };
         this.handleSubmit=this.handleSubmit.bind(this);
+        this.storeEmail=this.storeEmail.bind(this);
+        this.setCategory=this.setCategory.bind(this);
     }
     // componentDidMount(){
     //     var keys=Object.keys(localStorage),
@@ -20,6 +23,16 @@ class Login extends Component{
     //         localStorage.removeItem(keys[i])
     //     }
     // }
+    setCategory(){
+        if(!this.state.email) alert("Please enter Email first.")
+        this.props.callBack('candidate');
+    }
+    storeEmail(event){
+        this.setState({
+            email:event.target.value
+        })
+    }
+
     handleSubmit(values){
         const candidate={
             email:values.email,
@@ -63,7 +76,7 @@ class Login extends Component{
                     <Row className="form-group">
                         <Label sm={{size:2}} htmlFor="email">Email</Label>
                         <Col>
-                        <Control.text model=".email" id="email" name="email" className="form-control" placeholder="Email"></Control.text>
+                        <Control.text onChange={this.storeEmail} model=".email" id="email" name="email" className="form-control" placeholder="Email" required></Control.text>
                         </Col>
                     </Row>
                     <Row className="form-group">
@@ -76,8 +89,17 @@ class Login extends Component{
                         <Col md={{size:2,offset:4}}>
                         <Button type="submit">Submit</Button>
                         </Col>
+                    </Row>
+                    <Row>
                         <Col>
-                        <Link to="/Candidateregister" >Not Registered?</Link>
+                            <Link to="/Candidateregister" >Not Registered?</Link>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col md={{offset:3}}>
+                            <Link to={this.state.email?`/reset/${this.state.email}`:`/`} onClick={this.setCategory}>
+                                Reset Password if forgotten!
+                            </Link>
                         </Col>
                     </Row>
                     

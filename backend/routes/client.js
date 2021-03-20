@@ -105,6 +105,34 @@ router.post('/login',function(req,res){
     })
 });
 
+router.post('/reset',function(req,res){
+    var error;
+    var passHash;
+    Client.findOne({Email:req.body.resetCand.email},function(err,data){
+        if(err) console.log(err)
+        if(!data){
+            error="Email is not registered! Please Register first.";
+            return res.json({error:error,status:400})
+        }
+        if(typeof error==='undefined'){
+            bcrypt.genSalt(10,(err,salt)=>{
+                if(err) console.log(err);
+                bcrypt.hash(req.body.resetCand.reset,salt,(err,hash)=>{
+                    if(err) console.log(err);
+                    passHash=hash;
+                    Client.findOneAndUpdate({Email:req.body.resetCand.email},{Password:passHash},function(err,data){
+                        if(err) console.log(err)
+                        else{
+                            return res.json({error:'Successfully Updated',status:200});
+                        }
+                    })
+                })
+            })
+            
+        }
+    })
+})
+
 router.get('/delete/:id',function(req,res){
     Client.findOneAndDelete({Id:req.params.id},function(err){
         if(err) console.log(err);

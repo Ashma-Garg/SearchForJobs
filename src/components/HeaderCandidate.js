@@ -27,7 +27,7 @@ class HeaderCand extends Component {
 
     render() {
         return(
-                <Navbar className="bg-dark navbar-dark" fixedtop expand="md">
+                <Navbar className="bg-dark navbar-dark" fixedtop="true" expand="md">
                         <NavbarToggler onClick={this.toggleNav}/>
                         <NavbarBrand className="mr-auto" href={'/candidateJob/'+this.props.id}>STI</NavbarBrand>
                         <Collapse isOpen={this.state.isNavOpen} navbar>

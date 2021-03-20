@@ -169,7 +169,7 @@ class Jobs extends Component{
                 </div>
                 <div style={{padding:"5vh",backgroundColor:"#b8bdd9",minHeight:"100vh"}}>
 
-                <div class="container">
+                <div className="container">
                 <Row>
                 {this.state.disp}
                 </Row>
