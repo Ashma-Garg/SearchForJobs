@@ -168,13 +168,12 @@ class Jobs extends Component{
                 <Header id={this.props.match.params.id} name={this.state.name}/>
                 </div>
                 <div style={{padding:"5vh",backgroundColor:"#b8bdd9",minHeight:"100vh"}}>
-
-                <div className="container">
-                <Row>
-                {this.state.disp}
-                </Row>
+                    <div className="container">
+                        <Row>
+                            {this.state.disp}
+                        </Row>
+                    </div>
                 </div>
-            </div>
             </div>
             
         );

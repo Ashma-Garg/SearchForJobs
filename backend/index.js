@@ -9,7 +9,6 @@ mongoose=require('mongoose'),
 methodOverride=require('method-override'),
 session=require('express-session');
 var cors = require('cors'),
-session=require('express-session'),
 cookieParser=require('cookie-parser');
 var app=express();
 app.use(cookieParser('secret'));
